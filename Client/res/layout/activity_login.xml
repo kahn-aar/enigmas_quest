@@ -6,16 +6,17 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/android_picture"
             android:layout_width="146dp"
             android:layout_height="119dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:contentDescription="TODO"
-            android:layout_gravity="center_horizontal" />
+            android:contentDescription="@string/logo_description"
+            android:src="@drawable/enigma_luncher" />
 
         <Button
             android:id="@+id/create_account"
@@ -23,14 +24,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="TODO" />
+            android:text="@string/create_account" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingTop="10dp"
-            android:text="TODO"
+            android:text="@string/mail_login"
             android:textSize="10dp"
             />
 
@@ -47,7 +48,7 @@
             android:layout_gravity="center_horizontal"
             android:paddingTop="10dp"
             android:textSize="10dp"
-            android:text="TODO"
+            android:text="@string/password_login"
             />
 
         <EditText
@@ -63,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="connexion" />
+            android:text="@string/connect_login" />
 
     </LinearLayout>
 </ScrollView>
