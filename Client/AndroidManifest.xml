@@ -22,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.client.enigmas_quest.Map_Activity"
+            android:label="@string/title_activity_map_"
+            android:parentActivityName="com.client.enigmas_quest.LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.client.enigmas_quest.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>
