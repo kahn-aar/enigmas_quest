@@ -3,12 +3,17 @@ package com.client.enigmas_quest.data;
 public class DrawerItem {
 
 	private String title;
-	
+	private String ItemName;
 	private int imgResID;
 
-	public DrawerItem(String title, int imgResID) {
-		super();
+	public DrawerItem(String title) {
+		this(null, 0);
 		this.title = title;
+	}
+	
+	public DrawerItem(String ItemName, int imgResID) {
+		super();
+		this.ItemName = ItemName;
 		this.imgResID = imgResID;
 	}
 
@@ -18,6 +23,14 @@ public class DrawerItem {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getItemName() {
+		return ItemName;
+	}
+
+	public void setItemName(String ItemName) {
+		this.ItemName = ItemName;
 	}
 
 	public int getImgResID() {

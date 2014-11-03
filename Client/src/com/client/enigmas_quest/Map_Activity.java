@@ -51,8 +51,10 @@ public class Map_Activity extends ActionBarActivity implements
 		setContentView(R.layout.activity_map_);
 		
 		dataList = new ArrayList<DrawerItem>();
+		dataList.add(new DrawerItem("Game"));
 		dataList.add(new DrawerItem("Map", R.drawable.ic_action_gamepad));
         dataList.add(new DrawerItem("Stats", R.drawable.ic_action_about));
+        dataList.add(new DrawerItem("Aprameter"));
         dataList.add(new DrawerItem("Parameters", R.drawable.ic_action_settings));
 
 		mTitle = mDrawerTitle = getTitle();
@@ -90,7 +92,7 @@ public class Map_Activity extends ActionBarActivity implements
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		 
 		if (savedInstanceState == null) {
-		      onSelectItem(0);
+		      onSelectItem(1);
 		}
 	}
 	
@@ -116,17 +118,17 @@ public class Map_Activity extends ActionBarActivity implements
         Bundle args = new Bundle();
         
 		switch (number) {
-		case 0:
+		case 1:
 			fragment = new MapPageFragment();
             args.putString(MapPageFragment.ITEM_NAME, "yo");
 			break;
-		case 1:
+		case 2:
 			fragment = new StatsPageFragment();
             args.putString(StatsPageFragment.PLAYER_NAME, "Nicolas Martin");
             args.putInt(StatsPageFragment.SCORE, 54);
             args.putInt(StatsPageFragment.NB_ENIGMES, 18);
 			break;
-		case 2:
+		case 4:
 			fragment = new ParametersPageFragment();
 			break;
 		}
@@ -137,7 +139,7 @@ public class Map_Activity extends ActionBarActivity implements
                     .commit();
         
         mDrawerList.setItemChecked(number, true);
-        setTitle(dataList.get(number).getTitle());
+        setTitle(dataList.get(number).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
 
 	}
@@ -181,7 +183,9 @@ public class Map_Activity extends ActionBarActivity implements
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			onSelectItem(position);
+			if (dataList.get(position).getTitle() == null) {
+				onSelectItem(position);
+			}
 		}
 
 	}
