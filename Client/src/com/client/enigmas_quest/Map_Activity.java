@@ -1,50 +1,102 @@
 package com.client.enigmas_quest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.client.enigmas_quest.adapter.NavigationDrawerAdapter;
+import com.client.enigmas_quest.data.DrawerItem;
+import com.client.enigmas_quest.fragments.MapPageFragment;
+import com.client.enigmas_quest.fragments.StatsPageFragment;
 
 public class Map_Activity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-	/**
-	 * Fragment managing the behaviors, interactions and presentation of the
-	 * navigation drawer.
-	 */
-	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	/**
 	 * Used to store the last screen title. For use in
 	 * {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
+	private CharSequence mDrawerTitle;
+	
+	private DrawerLayout mDrawerLayout;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private ListView mDrawerList;
+	private NavigationDrawerAdapter adapter;
+	private List<DrawerItem> dataList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map_);
+		
+		dataList = new ArrayList<DrawerItem>();
+		dataList.add(new DrawerItem("Map", R.drawable.ic_launcher));
+        dataList.add(new DrawerItem("Stats", R.drawable.ic_launcher));
 
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
+		mTitle = mDrawerTitle = getTitle();
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout));
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+                GravityCompat.START);
+		
+		adapter = new NavigationDrawerAdapter(this, R.layout.custom_drawer_item,
+                dataList);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		mDrawerList.setAdapter(adapter);
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		 
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+		            R.drawable.ic_drawer, R.string.navigation_drawer_open,
+		            R.string.navigation_drawer_close) {
+		      public void onDrawerClosed(View view) {
+		            getActionBar().setTitle(mTitle);
+		            invalidateOptionsMenu(); // creates call to
+		                                                      // onPrepareOptionsMenu()
+		      }
+		 
+		      public void onDrawerOpened(View drawerView) {
+		            getActionBar().setTitle(mDrawerTitle);
+		            invalidateOptionsMenu(); // creates call to
+		                                                      // onPrepareOptionsMenu()
+		      }
+		};
+		 
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		 
+		if (savedInstanceState == null) {
+		      onSelectItem(0);
+		}
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+	      super.onPostCreate(savedInstanceState);
+	      // Sync the toggle state after onRestoreInstanceState has occurred.
+	      mDrawerToggle.syncState();
 	}
 
 	@Override
@@ -57,18 +109,38 @@ public class Map_Activity extends ActionBarActivity implements
 						PlaceholderFragment.newInstance(position + 1)).commit();
 	}
 
-	public void onSectionAttached(int number) {
+	public void onSelectItem(int number) {
+		Fragment fragment = null;
+        Bundle args = new Bundle();
+        
 		switch (number) {
+		case 0:
+			fragment = new MapPageFragment();
+            args.putString(MapPageFragment.ITEM_NAME, "yo");
+			break;
 		case 1:
-			mTitle = getString(R.string.title_section1);
+			fragment = new StatsPageFragment();
 			break;
 		case 2:
-			mTitle = getString(R.string.title_section2);
-			break;
-		case 3:
 			mTitle = getString(R.string.title_section3);
 			break;
 		}
+		
+		fragment.setArguments(args);
+        FragmentManager frgManager = getSupportFragmentManager();
+        frgManager.beginTransaction().replace(R.id.container, fragment)
+                    .commit();
+        
+        mDrawerList.setItemChecked(number, true);
+        setTitle(dataList.get(number).getTitle());
+        mDrawerLayout.closeDrawer(mDrawerList);
+
+	}
+	
+	@Override
+	public void setTitle(CharSequence title) {
+	      mTitle = title;
+	      getActionBar().setTitle(mTitle);
 	}
 
 	public void restoreActionBar() {
@@ -80,27 +152,33 @@ public class Map_Activity extends ActionBarActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.map_, menu);
-			restoreActionBar();
-			return true;
-		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		// The action bar home/up action should open or close the drawer.
+	      // ActionBarDrawerToggle will take care of this.
+	      if (mDrawerToggle.onOptionsItemSelected(item)) {
+	            return true;
+	      }
+	 
+	      return false;
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	      super.onConfigurationChanged(newConfig);
+	      // Pass any configuration change to the drawer toggles
+	      mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			onSelectItem(position);
 		}
-		return super.onOptionsItemSelected(item);
+
 	}
 
 	/**
@@ -130,10 +208,10 @@ public class Map_Activity extends ActionBarActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_map_, container,
+			View rootView = inflater.inflate(R.layout.fragment_map_one, container,
 					false);
 			TextView textView = (TextView) rootView
-					.findViewById(R.id.section_label);
+					.findViewById(R.id.section_label_one);
 			textView.setText(Integer.toString(getArguments().getInt(
 					ARG_SECTION_NUMBER)));
 			return rootView;
@@ -142,7 +220,7 @@ public class Map_Activity extends ActionBarActivity implements
 		@Override
 		public void onAttach(Activity activity) {
 			super.onAttach(activity);
-			((Map_Activity) activity).onSectionAttached(getArguments().getInt(
+			((Map_Activity) activity).onSelectItem(getArguments().getInt(
 					ARG_SECTION_NUMBER));
 		}
 	}

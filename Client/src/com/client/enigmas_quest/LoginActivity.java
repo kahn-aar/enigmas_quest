@@ -1,15 +1,13 @@
 package com.client.enigmas_quest;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -20,6 +18,16 @@ public class LoginActivity extends ActionBarActivity {
 
 		if (savedInstanceState == null) {
 		}
+		
+		Button bouton = (Button) findViewById(R.id.connect);
+		bouton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(LoginActivity.this, Map_Activity.class);
+                startActivity(intent);
+			}
+		});
 	}
 
 	@Override
