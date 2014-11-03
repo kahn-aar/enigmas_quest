@@ -9,7 +9,27 @@
     tools:context="com.client.enigmas_quest.Map_Activity$PlaceholderFragment" >
 
     <TextView
-        android:id="@+id/section_label_two"
+        android:id="@+id/name_player"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score_stats" />
+    
+    <TextView
+        android:id="@+id/score_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/questions_asked_stats" />
+    
+    <TextView
+        android:id="@+id/questions_asked_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.client.enigmas_quest.adapter.NavigationDrawerAdapter;
 import com.client.enigmas_quest.data.DrawerItem;
 import com.client.enigmas_quest.fragments.MapPageFragment;
+import com.client.enigmas_quest.fragments.ParametersPageFragment;
 import com.client.enigmas_quest.fragments.StatsPageFragment;
 
 public class Map_Activity extends ActionBarActivity implements
@@ -50,8 +51,9 @@ public class Map_Activity extends ActionBarActivity implements
 		setContentView(R.layout.activity_map_);
 		
 		dataList = new ArrayList<DrawerItem>();
-		dataList.add(new DrawerItem("Map", R.drawable.ic_launcher));
-        dataList.add(new DrawerItem("Stats", R.drawable.ic_launcher));
+		dataList.add(new DrawerItem("Map", R.drawable.ic_action_gamepad));
+        dataList.add(new DrawerItem("Stats", R.drawable.ic_action_about));
+        dataList.add(new DrawerItem("Parameters", R.drawable.ic_action_settings));
 
 		mTitle = mDrawerTitle = getTitle();
 
@@ -120,9 +122,12 @@ public class Map_Activity extends ActionBarActivity implements
 			break;
 		case 1:
 			fragment = new StatsPageFragment();
+            args.putString(StatsPageFragment.PLAYER_NAME, "Nicolas Martin");
+            args.putInt(StatsPageFragment.SCORE, 54);
+            args.putInt(StatsPageFragment.NB_ENIGMES, 18);
 			break;
 		case 2:
-			mTitle = getString(R.string.title_section3);
+			fragment = new ParametersPageFragment();
 			break;
 		}
 		

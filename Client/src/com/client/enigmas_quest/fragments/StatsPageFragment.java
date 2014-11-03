@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 public class StatsPageFragment extends Fragment {
 
+	public static final String PLAYER_NAME = "player_name";
+	public static final String SCORE = "score";
+	public static final String NB_ENIGMES = "nb_enigmes";
+	
 	TextView monNom;
 	TextView score;
 	TextView enigmes;
@@ -19,14 +23,16 @@ public class StatsPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
 
-          View view = inflater.inflate(R.layout.fragment_map_one, container,
+          View view = inflater.inflate(R.layout.fragment_map_two, container,
                       false);
 
-          monNom = (TextView) view.findViewById(R.id.section_label_one);
-          score = (TextView) view.findViewById(R.id.section_label_one);
-          enigmes = (TextView) view.findViewById(R.id.section_label_one);
+          monNom = (TextView) view.findViewById(R.id.name_player);
+          score = (TextView) view.findViewById(R.id.score_stats);
+          enigmes = (TextView) view.findViewById(R.id.questions_asked_stats);
 
-          monNom.setText("Nicolas Martin");
+          monNom.setText(getArguments().getString(PLAYER_NAME));
+          score.setText(String.valueOf(getArguments().getInt(SCORE)));
+          enigmes.setText(String.valueOf(getArguments().getInt(NB_ENIGMES)));
           return view;
     }
 }
