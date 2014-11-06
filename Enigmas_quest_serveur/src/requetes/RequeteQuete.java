@@ -38,4 +38,29 @@ public class RequeteQuete {
 		
 		return result;
 	}
+	
+	/**
+	 * renvoie la quete qui a le numéro demandé
+	 * @param conn
+	 * @param num
+	 * @return
+	 * @throws SQLException
+	 */
+	public Quetes getQueteByNum(Connection conn, int num) throws SQLException{
+		Quetes result;
+		RequeteQuestion rq = new RequeteQuestion();
+		RequeteCombat rc = new RequeteCombat();
+		RequetePhoto rp = new RequetePhoto();
+		RequeteVideo rv = new RequeteVideo();
+		
+		if((result = rq.getQuestionByNum(conn, num)) != null){ 
+		}else if((result = rc.getCombatByNum(conn, num)) != null){
+		}else if((result = rp.getPhotoByNum(conn, num)) != null){
+		}else if((result = rv.getVideoByNum(conn, num)) != null){
+		}else{
+			result = null;
+		}
+		
+		return result;
+	}
 }
