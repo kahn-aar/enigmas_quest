@@ -93,4 +93,43 @@ public class RequeteCombat {
 		stmt.close();
 		return result;
 	}
+	
+	/**
+	 * renvoie tout les combats pour une position donnée
+	 * @param conn
+	 * @param position
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Combat> getAllCombatByPosition(Connection conn, Position position) throws SQLException{
+		ArrayList<Combat> result = new ArrayList<Combat>();
+		int numC, numQ;
+		String idPlayer1, idPlayer2;
+		Question question;
+		Player player1, player2;
+		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM combat WHERE positionId = ?");
+		// Execute the query
+		st.setInt(1, position.getId());
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			numC = rs.getInt("numero");
+			numQ = rs.getInt("question");
+			idPlayer1 = rs.getString("player1");
+			idPlayer2 = rs.getString("player2");
+			RequeteQuestion rq = new RequeteQuestion();
+			question = rq.getQuestionByNum(conn, numQ);
+			RequetePlayer rplay = new RequetePlayer();
+			player1 = rplay.getPlayerByLogin(conn, idPlayer1);
+			player2 = rplay.getPlayerByLogin(conn, idPlayer2);
+
+			result.add(new Combat(position, numC, player1, player2, question));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		return result;
+	}
 }

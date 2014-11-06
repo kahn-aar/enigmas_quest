@@ -64,7 +64,7 @@ public class RequeteQuestion {
 		int numQ;
 		
 		// Get a statement from the connection
-		PreparedStatement st = conn.prepareStatement("SELECT * FROM question WHERE numero = ?");
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM question WHERE positionId = ?");
 		// Execute the query
 		st.setInt(1, position.getId());
 		ResultSet rs = st.executeQuery();
@@ -112,6 +112,37 @@ public class RequeteQuestion {
 		// Close the result set, statement and the connection
 		rs.close();
 		stmt.close();
+		return result;
+	}
+	
+	/**
+	 * renvoie toutes les questions pour une position donnée
+	 * @param conn
+	 * @param position
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Question> getAllQuestionByPosition(Connection conn, Position position) throws SQLException{
+		ArrayList<Question> result = new ArrayList<Question>();
+		String question, reponse;
+		int numero;
+		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM question WHERE positionId = ?");
+		// Execute the query
+		st.setInt(1, position.getId());
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			question = rs.getString("question");
+			reponse = rs.getString("reponse");
+			numero = rs.getInt("numero");
+
+			result.add(new Question(position, numero, question, reponse));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
 		return result;
 	}
 	

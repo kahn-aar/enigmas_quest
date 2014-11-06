@@ -16,9 +16,29 @@ public class RequeteVideo {
 	 * @param conn
 	 * @param num
 	 * @return
+	 * @throws SQLException 
 	 */
-	public Video getVideoByNum(Connection conn, int num){
+	public Video getVideoByNum(Connection conn, int num) throws SQLException{
+		Video result;
+		Position position;
+		int positionId;
+		String theme;
 		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE numero = ?");
+		// Execute the query
+		st.setInt(1, num);
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+			theme = rs.getString("theme");
+			positionId = rs.getInt("positionId");
+			RequetePosition rp = new RequetePosition();
+			position = rp.getPositionById(conn, positionId);
+			result = new Video(position, num, theme);
+		} else {
+			result = null;
+		}
+		return result;
 	}
 	
 	/**
@@ -26,9 +46,27 @@ public class RequeteVideo {
 	 * @param conn
 	 * @param position
 	 * @return
+	 * @throws SQLException 
 	 */
-	public Video getVideoByPosition(Connection conn, Position position){
+	public Video getVideoByPosition(Connection conn, Position position) throws SQLException{
+		Video result;
+		String theme;
+		int num;
 		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE positionId = ?");
+		// Execute the query
+		st.setInt(1, position.getId());
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+			theme = rs.getString("theme");
+			num = rs.getInt("numero");
+			result = new Video(position, num, theme);
+		} else {
+			result = null;
+		}
+		
+		return result;
 	}
 	
 	/**
@@ -36,8 +74,58 @@ public class RequeteVideo {
 	 * @param conn
 	 * @param theme
 	 * @return
+	 * @throws SQLException 
 	 */
-	public ArrayList<Video> getVideosByTheme(Connection conn, String theme){
+	public ArrayList<Video> getVideosByTheme(Connection conn, String theme) throws SQLException{
+		ArrayList<Video> result = new ArrayList<Video>();
+		int idPosition, numero;
 		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE theme = ?");
+		// Execute the query
+		st.setString(1, theme);
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			idPosition = rs.getInt("positionId");
+			numero = rs.getInt("numero");
+			
+			RequetePosition rp = new RequetePosition();
+			result.add(new Video(rp.getPositionById(conn, idPosition), numero, theme));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		return result;
+	}
+	
+	/**
+	 * renvoie toutes les videos pour une position donnée
+	 * @param conn
+	 * @param position
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Video> getVideosByPosition(Connection conn, Position position) throws SQLException{
+		ArrayList<Video> result = new ArrayList<Video>();
+		int numero;
+		String theme;
+		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE positionId = ?");
+		// Execute the query
+		st.setInt(1, position.getId());
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			numero = rs.getInt("numero");
+			theme = rs.getString("theme");
+			
+			result.add(new Video(position, numero, theme));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		return result;
 	}
 }
