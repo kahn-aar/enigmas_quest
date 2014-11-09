@@ -2,7 +2,12 @@ package loader;
 
 import java.sql.SQLException;
 
+import requetes.RequeteCombat;
+import requetes.RequetePhoto;
 import requetes.RequetePlayer;
+import requetes.RequeteQuestion;
+import requetes.RequeteQuete;
+import requetes.RequeteVideo;
 
 public class Testconnection {
 
@@ -11,12 +16,14 @@ public class Testconnection {
 		 
 		 // test de requete
 		 
-		 RequetePlayer rp = new RequetePlayer();
-		 //rp.nbQueteByLogin(Controleur.getConn(), "Bob");
+			RequetePlayer rp = new RequetePlayer();
+			RequeteQuestion rq = new RequeteQuestion();
+			RequeteCombat rc = new RequeteCombat();
+			RequetePhoto rph = new RequetePhoto();
+			RequeteVideo rv = new RequeteVideo();
+			RequeteQuete rquete = new RequeteQuete();
+			
 		 
-		 //rp.positionByLogin(Controleur.getConn(), "Bob");
-		 
-		 rp.allPlayers(Controleur.getConn());
 		 
 		 //Fin du test OK
 	 }

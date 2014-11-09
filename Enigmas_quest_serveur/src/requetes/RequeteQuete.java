@@ -35,7 +35,7 @@ public class RequeteQuete {
 		result.addAll(rc.getAllCombatByPosition(conn, position));
 		result.addAll(rp.getPhotosByPosition(conn, position));
 		result.addAll(rv.getVideosByPosition(conn, position));
-		
+
 		return result;
 	}
 	
