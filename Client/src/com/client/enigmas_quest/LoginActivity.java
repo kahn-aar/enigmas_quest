@@ -28,6 +28,16 @@ public class LoginActivity extends ActionBarActivity {
                 startActivity(intent);
 			}
 		});
+		
+		Button bouton2 = (Button) findViewById(R.id.create_account);
+		bouton2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(LoginActivity.this, CreateAccountActivity.class);
+                startActivity(intent);
+			}
+		});
 	}
 
 	@Override

@@ -16,8 +16,15 @@
     <string name="questions_asked_stats">Nombre de questions répondues : </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="create_account_nom">password</string>
+    <string name="create_account_email">pseudo</string>
     <string name="action_example">Example action</string>
     <string name="title_activity_enigma">EnigmaActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_account">Création de compte</string>
+    
+    
+    <string name="error_account_email">Entrez un pseudo valide</string>
+    <string name="error_account_password">Entrer un mot de passe</string>
 
 </resources>
