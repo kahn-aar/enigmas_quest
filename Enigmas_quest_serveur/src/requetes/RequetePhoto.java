@@ -27,7 +27,7 @@ public class RequetePhoto {
 		Photo result;
 		Position position;
 		int positionId;
-		String theme;
+		String theme, url;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo WHERE numero = ?");
@@ -37,9 +37,10 @@ public class RequetePhoto {
 		if (rs.next()) {
 			theme = rs.getString("theme");
 			positionId = rs.getInt("positionId");
+			url = rs.getString("url");
 			RequetePosition rp = new RequetePosition();
 			position = rp.getPositionById(conn, positionId);
-			result = new Photo(position, num, theme);
+			result = new Photo(position, num, theme, url);
 		} else {
 			result = null;
 		}
@@ -55,7 +56,7 @@ public class RequetePhoto {
 	 */
 	public Photo getPhotoByPosition(Connection conn, Position position) throws SQLException{
 		Photo result;
-		String theme;
+		String theme, url;
 		int num;
 		
 		// Get a statement from the connection
@@ -66,7 +67,8 @@ public class RequetePhoto {
 		if (rs.next()) {
 			theme = rs.getString("theme");
 			num = rs.getInt("numero");
-			result = new Photo(position, num, theme);
+			url = rs.getString("url");
+			result = new Photo(position, num, theme, url);
 		} else {
 			result = null;
 		}
@@ -84,6 +86,7 @@ public class RequetePhoto {
 	public ArrayList<Photo> getPhotosByTheme(Connection conn, String theme) throws SQLException{
 		ArrayList<Photo> result = new ArrayList<Photo>();
 		int idPosition, numero;
+		String url;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo WHERE theme = ?");
@@ -95,9 +98,9 @@ public class RequetePhoto {
 		while (rs.next()) {
 			idPosition = rs.getInt("positionId");
 			numero = rs.getInt("numero");
-			
+			url = rs.getString("url");
 			RequetePosition rp = new RequetePosition();
-			result.add(new Photo(rp.getPositionById(conn, idPosition), numero, theme));
+			result.add(new Photo(rp.getPositionById(conn, idPosition), numero, theme, url));
 		}
 		// Close the result set, statement and the connection
 		rs.close();
@@ -114,7 +117,7 @@ public class RequetePhoto {
 	public ArrayList<Photo> getPhotosByPosition(Connection conn, Position position) throws SQLException{
 		ArrayList<Photo> result = new ArrayList<Photo>();
 		int numero;
-		String theme;
+		String theme, url;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo WHERE positionId = ?");
@@ -126,8 +129,8 @@ public class RequetePhoto {
 		while (rs.next()) {
 			numero = rs.getInt("numero");
 			theme = rs.getString("theme");
-			
-			result.add(new Photo(position, numero, theme));
+			url = rs.getString("url");
+			result.add(new Photo(position, numero, theme, url));
 		}
 		// Close the result set, statement and the connection
 		rs.close();

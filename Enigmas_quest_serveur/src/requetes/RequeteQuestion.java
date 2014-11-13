@@ -28,6 +28,7 @@ public class RequeteQuestion {
 		Question result;
 		String question;
 		String reponse;
+		String possible1, possible2, possible3, possible4;
 		int positionId;
 		int numQ;
 		
@@ -38,11 +39,15 @@ public class RequeteQuestion {
 		ResultSet rs = st.executeQuery();
 		if (rs.next()) {
 			question = rs.getString("question");
+			possible1 = rs.getString("possible1");
+			possible2 = rs.getString("possible2");
+			possible3 = rs.getString("possible3");
+			possible4 = rs.getString("possible4");
 			reponse = rs.getString("reponse");
 			positionId = rs.getInt("positionId");
 			numQ = rs.getInt("numero");
 			RequetePosition rp = new RequetePosition();
-			result = new Question(rp.getPositionById(conn, positionId), numQ, question, reponse);
+			result = new Question(rp.getPositionById(conn, positionId), numQ, question, reponse, possible1, possible2, possible3, possible4);
 		} else {
 			result = null;
 		}
@@ -61,6 +66,7 @@ public class RequeteQuestion {
 		Question result;
 		String question;
 		String reponse;
+		String possible1, possible2, possible3, possible4;
 		int numQ;
 		
 		// Get a statement from the connection
@@ -71,8 +77,12 @@ public class RequeteQuestion {
 		if (rs.next()) {
 			question = rs.getString("question");
 			reponse = rs.getString("reponse");
+			possible1 = rs.getString("possible1");
+			possible2 = rs.getString("possible2");
+			possible3 = rs.getString("possible3");
+			possible4 = rs.getString("possible4");
 			numQ = rs.getInt("numero");
-			result = new Question(position, numQ, question, reponse);
+			result = new Question(position, numQ, question, reponse, possible1, possible2, possible3, possible4);
 		} else {
 			result = null;
 		}
@@ -91,6 +101,7 @@ public class RequeteQuestion {
 		String question, reponse;
 		Position position;
 		int numero, idPosition;
+		String possible1, possible2, possible3, possible4;
 		
 		// Get a statement from the connection
 		Statement stmt = conn.createStatement();
@@ -103,11 +114,15 @@ public class RequeteQuestion {
 			question = rs.getString("question");
 			reponse = rs.getString("reponse");
 			numero = rs.getInt("numero");
+			possible1 = rs.getString("possible1");
+			possible2 = rs.getString("possible2");
+			possible3 = rs.getString("possible3");
+			possible4 = rs.getString("possible4");
 			idPosition = rs.getInt("positionId");
 			RequetePosition rp = new RequetePosition();
 			position = rp.getPositionById(conn, idPosition);
 
-			result.add(new Question(position, numero, question, reponse));
+			result.add(new Question(position, numero, question, reponse, possible1, possible2, possible3, possible4));
 		}
 		// Close the result set, statement and the connection
 		rs.close();
@@ -126,6 +141,7 @@ public class RequeteQuestion {
 		ArrayList<Question> result = new ArrayList<Question>();
 		String question, reponse;
 		int numero;
+		String possible1, possible2, possible3, possible4;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM question WHERE positionId = ?");
@@ -137,9 +153,13 @@ public class RequeteQuestion {
 		while (rs.next()) {
 			question = rs.getString("question");
 			reponse = rs.getString("reponse");
+			possible1 = rs.getString("possible1");
+			possible2 = rs.getString("possible2");
+			possible3 = rs.getString("possible3");
+			possible4 = rs.getString("possible4");
 			numero = rs.getInt("numero");
 
-			result.add(new Question(position, numero, question, reponse));
+			result.add(new Question(position, numero, question, reponse, possible1, possible2, possible3, possible4));
 		}
 		// Close the result set, statement and the connection
 		rs.close();

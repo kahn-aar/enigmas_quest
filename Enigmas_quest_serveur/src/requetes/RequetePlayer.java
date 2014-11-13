@@ -102,7 +102,7 @@ public class RequetePlayer {
 	 */
 	public ArrayList<Player> allPlayers(Connection conn) throws SQLException{
 		ArrayList<Player> result = new ArrayList<Player>();
-		String login;
+		String login, salt;
 		Position position;
 		int idPosition;
 		int quetes;
@@ -117,12 +117,13 @@ public class RequetePlayer {
 		// Loop through the result set
 		while (rs.next()) {
 			login = rs.getString("login");
+			salt = rs.getString("salt");
 			idPosition = rs.getInt("positionId");
 			position = positionByLogin(conn, login);
 			quetes = rs.getInt("quetesRealisees");
 			points = rs.getInt("points");
 
-			result.add(new Player(login, points, quetes, position));
+			result.add(new Player(login, salt, points, quetes, position));
 		}
 		// Close the result set, statement and the connection
 		rs.close();
@@ -138,9 +139,10 @@ public class RequetePlayer {
 	 */
 	public void addPlayer(Connection conn, Player player) throws SQLException{
 		
-		PreparedStatement st = conn.prepareStatement("INSERT INTO player VALUES (?',0,0,0')");
+		PreparedStatement st = conn.prepareStatement("INSERT INTO player(login, salt) VALUES (?,?)");
 		// Execute the query
 		st.setString(1, player.getLogin());
+		st.setString(2, player.getSalt());
 		st.executeQuery();
 		
 	}
@@ -180,6 +182,7 @@ public class RequetePlayer {
 	public Player getPlayerByLogin(Connection conn, String login) throws SQLException{
 		Player result;
 		int points, quetes, positionId;
+		String salt;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM player WHERE login = ?");
@@ -188,10 +191,11 @@ public class RequetePlayer {
 		ResultSet rs = st.executeQuery();
 		if (rs.next()) {
 			points = rs.getInt("points");
+			salt = rs.getString("salt");
 			quetes = rs.getInt("quetesRealisees");
 			positionId = rs.getInt("positionId");
 			RequetePosition rp = new RequetePosition();
-			result = new Player(login, points, quetes, rp.getPositionById(conn, positionId));
+			result = new Player(login, salt,  points, quetes, rp.getPositionById(conn, positionId));
 		} else {
 			result = null;
 		}

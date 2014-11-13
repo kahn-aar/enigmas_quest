@@ -10,14 +10,14 @@ drop table positions;
 create table positions(
 	id integer AUTO_INCREMENT,
 	latitude float,
-	longitude float,fS
+	longitude float,
 	primary key (id)
 );
 
 create table player(
 	login varchar(20),
-	points integer,
-	quetesRealisees integer,nqre
+	points integer DEFAULT 0,
+	quetesRealisees integer DEFAULT 0,
 	positionId integer,
 	salt varchar(50),
 	primary key (login),

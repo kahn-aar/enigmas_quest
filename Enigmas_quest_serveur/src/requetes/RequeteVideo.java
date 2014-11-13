@@ -22,7 +22,7 @@ public class RequeteVideo {
 		Video result;
 		Position position;
 		int positionId;
-		String theme;
+		String theme, url;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE numero = ?");
@@ -32,9 +32,10 @@ public class RequeteVideo {
 		if (rs.next()) {
 			theme = rs.getString("theme");
 			positionId = rs.getInt("positionId");
+			url = rs.getString("url");
 			RequetePosition rp = new RequetePosition();
 			position = rp.getPositionById(conn, positionId);
-			result = new Video(position, num, theme);
+			result = new Video(position, num, theme, url);
 		} else {
 			result = null;
 		}
@@ -50,7 +51,7 @@ public class RequeteVideo {
 	 */
 	public Video getVideoByPosition(Connection conn, Position position) throws SQLException{
 		Video result;
-		String theme;
+		String theme, url;
 		int num;
 		
 		// Get a statement from the connection
@@ -61,7 +62,8 @@ public class RequeteVideo {
 		if (rs.next()) {
 			theme = rs.getString("theme");
 			num = rs.getInt("numero");
-			result = new Video(position, num, theme);
+			url = rs.getString("url");
+			result = new Video(position, num, theme, url);
 		} else {
 			result = null;
 		}
@@ -79,6 +81,7 @@ public class RequeteVideo {
 	public ArrayList<Video> getVideosByTheme(Connection conn, String theme) throws SQLException{
 		ArrayList<Video> result = new ArrayList<Video>();
 		int idPosition, numero;
+		String url;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE theme = ?");
@@ -90,9 +93,9 @@ public class RequeteVideo {
 		while (rs.next()) {
 			idPosition = rs.getInt("positionId");
 			numero = rs.getInt("numero");
-			
+			url = rs.getString("url");
 			RequetePosition rp = new RequetePosition();
-			result.add(new Video(rp.getPositionById(conn, idPosition), numero, theme));
+			result.add(new Video(rp.getPositionById(conn, idPosition), numero, theme, url));
 		}
 		// Close the result set, statement and the connection
 		rs.close();
@@ -109,7 +112,7 @@ public class RequeteVideo {
 	public ArrayList<Video> getVideosByPosition(Connection conn, Position position) throws SQLException{
 		ArrayList<Video> result = new ArrayList<Video>();
 		int numero;
-		String theme;
+		String theme, url;
 		
 		// Get a statement from the connection
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM video WHERE positionId = ?");
@@ -121,8 +124,8 @@ public class RequeteVideo {
 		while (rs.next()) {
 			numero = rs.getInt("numero");
 			theme = rs.getString("theme");
-			
-			result.add(new Video(position, numero, theme));
+			url = rs.getString("url");
+			result.add(new Video(position, numero, theme, url));
 		}
 		// Close the result set, statement and the connection
 		rs.close();
