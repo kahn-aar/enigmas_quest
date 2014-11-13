@@ -12,10 +12,13 @@ public class Video extends Multimedia{
 	 * @param position
 	 * @param numero
 	 * @param theme
+	 * @param url
 	 */
-	public Video(Position position, int numero, String theme) {
-		super(position, numero, theme);
+	public Video(Position position, int numero, String theme, String url) {
+		super(position, numero, theme, url);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 }

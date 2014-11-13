@@ -7,26 +7,29 @@ package mappage;
  */
 public class Player {
 
-	private String login;
+	private String login, salt;
 	private int points;
 	private int quetesRealisees;
 	private Position position;
 	
 	/**
-	 * Constructeur par champs
+	 * Constructeur
 	 * @param login
+	 * @param salt
 	 * @param points
 	 * @param quetesRealisees
 	 * @param position
 	 */
-	public Player(String login, int points, int quetesRealisees,
+	public Player(String login, String salt, int points, int quetesRealisees,
 			Position position) {
 		super();
 		this.login = login;
+		this.salt = salt;
 		this.points = points;
 		this.quetesRealisees = quetesRealisees;
 		this.position = position;
 	}
+	
 	public String getLogin() {
 		return login;
 	}
@@ -50,6 +53,14 @@ public class Player {
 	}
 	public void setPosition(Position position) {
 		this.position = position;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 	
 	

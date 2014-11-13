@@ -12,10 +12,13 @@ public class Photo extends Multimedia{
 	 * @param position
 	 * @param numero
 	 * @param theme
+	 * @param url
 	 */
-	public Photo(Position position, int numero, String theme) {
-		super(position, numero, theme);
+	public Photo(Position position, int numero, String theme, String url) {
+		super(position, numero, theme, url);
 		// TODO Auto-generated constructor stub
 	}
+
+	
 	
 }
