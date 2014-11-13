@@ -202,4 +202,26 @@ public class RequetePlayer {
 		
 		return result;
 	}
+	
+	/**
+	 * Retourne le mot de passe de l'utilisateur selon le login entré
+	 * @param conn
+	 * @param login
+	 * @return
+	 * @throws SQLException
+	 */
+	public String getPasswordFromLogin(Connection conn, String login) throws SQLException{
+		String result;
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT salt FROM player WHERE login = ?");
+		// Execute the query
+		st.setString(1, login);
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+			result = rs.getString("salt");
+		} else {
+			result = "";
+		}
+		return result;
+	}
 }
