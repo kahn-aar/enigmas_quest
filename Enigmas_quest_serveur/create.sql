@@ -75,6 +75,3 @@ create table video(
 	foreign key (positionId) references positions(id)
 );
 
-
---INSERT FIXTURE
-insert into player (login) values ('bob');
