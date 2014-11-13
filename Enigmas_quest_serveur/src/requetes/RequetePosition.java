@@ -55,7 +55,7 @@ public class RequetePosition {
 		// Execute the query
 		st.setFloat(1, longitude);
 		st.setFloat(2, latitude);
-		st.executeQuery();
+		st.executeUpdate();
 	}
 	
 	/**

@@ -143,7 +143,7 @@ public class RequetePlayer {
 		// Execute the query
 		st.setString(1, player.getLogin());
 		st.setString(2, player.getSalt());
-		st.executeQuery();
+		st.executeUpdate();
 		
 	}
 	
@@ -164,11 +164,11 @@ public class RequetePlayer {
 		int positionId = rp.getIdByCoor(conn, position.getLongitude(), position.getLatitude());
 		
 		//update player
-		PreparedStatement st = conn.prepareStatement("UPDATE player SET position = ? WHERE login = ? ");
+		PreparedStatement st = conn.prepareStatement("UPDATE player SET positionId = ? WHERE login = ? ");
 		// Execute the query
 		st.setInt(1, positionId);
 		st.setString(2, player.getLogin());
-		st.executeQuery();
+		st.executeUpdate();
 		
 	}
 	
