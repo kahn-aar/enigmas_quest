@@ -3,7 +3,6 @@ package com.client.enigmas_quest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.client.enigmas_quest.application.EnigmaApplication;
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Player;
 

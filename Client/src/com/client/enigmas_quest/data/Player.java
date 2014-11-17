@@ -20,6 +20,14 @@ public class Player {
 	}
 	
 	
+	public Player() {
+		id = 1;
+		name = "nicoco";
+		points = 5;
+		questionAnswered = 10;
+	}
+
+
 	public int getId() {
 		return id;
 	}

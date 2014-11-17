@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.client.enigmas_quest.application.EnigmaApplication;
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Player;
 
