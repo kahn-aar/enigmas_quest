@@ -13,12 +13,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.client.enigmas_quest.application.EnigmaApplication;
+import com.client.enigmas_quest.constants.EnigmasConstants;
+import com.client.enigmas_quest.data.Player;
+
 public class CreateAccountActivity extends Activity {
 
+	EnigmaApplication application;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_account);
+		
+		application = (EnigmaApplication) getApplicationContext();
 		
 		final EditText email = (EditText) findViewById(R.id.createAccoutMail);
         final EditText password = (EditText) findViewById(R.id.CreateAccountPassword);
@@ -51,10 +59,11 @@ public class CreateAccountActivity extends Activity {
 
 
                 // ENVOYER LE MESSAGE AVEC LES INFORMATIONS
-
-
-                //On retourne sur la page d'accueil
-                Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
+                Player player = application.createNewAccount(emailText, passwordText);
+                
+                //On pars vers la page Map
+                Intent intent = new Intent(CreateAccountActivity.this, Map_Activity.class);
+                intent.getIntExtra(EnigmasConstants.INTENT_CREATE_ACCOUNT, player.getId());
                 startActivity(intent);
                 CreateAccountActivity.this.finish();
             }

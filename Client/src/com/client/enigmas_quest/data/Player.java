@@ -1,5 +1,8 @@
 package com.client.enigmas_quest.data;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Player {
 
 	private int id;
@@ -7,6 +10,14 @@ public class Player {
 	private int points;
 	private int questionAnswered;
 	private int questionAsked;
+	
+	public Player(JSONObject jsonObject) throws JSONException {
+		this.id = jsonObject.getInt("id");
+		this.name = jsonObject.getString("name");
+		this.points = 0;
+		this.questionAnswered = 0;
+		this.questionAsked = 0;
+	}
 	
 	
 	public int getId() {
