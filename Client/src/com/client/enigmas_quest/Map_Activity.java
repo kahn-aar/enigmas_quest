@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.client.enigmas_quest.adapter.NavigationDrawerAdapter;
 import com.client.enigmas_quest.data.DrawerItem;
+import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.fragments.MapPageFragment;
 import com.client.enigmas_quest.fragments.ParametersPageFragment;
 import com.client.enigmas_quest.fragments.StatsPageFragment;
@@ -31,11 +32,9 @@ import com.client.enigmas_quest.fragments.StatsPageFragment;
 public class Map_Activity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+	
+	private EnigmaApplication application;
 
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
 	private CharSequence mTitle;
 	private CharSequence mDrawerTitle;
 	
@@ -50,11 +49,13 @@ public class Map_Activity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map_);
 		
+		application = (EnigmaApplication) getApplicationContext();
+		
 		dataList = new ArrayList<DrawerItem>();
 		dataList.add(new DrawerItem("Game"));
 		dataList.add(new DrawerItem("Map", R.drawable.ic_action_gamepad));
         dataList.add(new DrawerItem("Stats", R.drawable.ic_action_about));
-        dataList.add(new DrawerItem("Aprameter"));
+        dataList.add(new DrawerItem("Parameter"));
         dataList.add(new DrawerItem("Parameters", R.drawable.ic_action_settings));
 
 		mTitle = mDrawerTitle = getTitle();
@@ -91,6 +92,8 @@ public class Map_Activity extends ActionBarActivity implements
 		 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		 
+		application.getAllEnigmasPositions();
+		
 		if (savedInstanceState == null) {
 		      onSelectItem(1);
 		}
@@ -124,9 +127,9 @@ public class Map_Activity extends ActionBarActivity implements
 			break;
 		case 2:
 			fragment = new StatsPageFragment();
-            args.putString(StatsPageFragment.PLAYER_NAME, "Nicolas Martin");
-            args.putInt(StatsPageFragment.SCORE, 54);
-            args.putInt(StatsPageFragment.NB_ENIGMES, 18);
+            args.putString(StatsPageFragment.PLAYER_NAME, application.getPlayer().getName());
+            args.putInt(StatsPageFragment.SCORE, application.getPlayer().getPoints());
+            args.putInt(StatsPageFragment.NB_ENIGMES, application.getPlayer().getQuestionAnswered());
 			break;
 		case 4:
 			fragment = new ParametersPageFragment();
