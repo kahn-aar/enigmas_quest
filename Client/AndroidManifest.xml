@@ -30,6 +30,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.client.enigmas_quest.LoginActivity" />
         </activity>
+        <activity
+            android:name="com.client.enigmas_quest.EnigmaActivity"
+            android:label="@string/title_activity_enigma"
+            android:parentActivityName="com.client.enigmas_quest.Map_Activity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.client.enigmas_quest.Map_Activity" />
+        </activity>
+        <activity
+            android:name="com.client.enigmas_quest.CreateAccountActivity"
+            android:label="@string/title_activity_create_account"
+            android:parentActivityName="com.client.enigmas_quest.LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.client.enigmas_quest.LoginActivity" />
+        </activity>
     </application>
 
 </manifest>
