@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -18,11 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.client.enigmas_quest.adapter.NavigationDrawerAdapter;
+import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.DrawerItem;
 import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.fragments.MapPageFragment;
@@ -97,6 +101,8 @@ public class Map_Activity extends ActionBarActivity implements
 		if (savedInstanceState == null) {
 		      onSelectItem(1);
 		}
+		
+		
 	}
 	
 	@Override
@@ -145,6 +151,12 @@ public class Map_Activity extends ActionBarActivity implements
         setTitle(dataList.get(number).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
 
+	}
+	
+	public void sendMessage(View view) {
+		Intent intent = new Intent(this, EnigmaActivity.class);
+		intent.putExtra(EnigmasConstants.ENIGMA_ID, 4);
+		startActivity(intent);
 	}
 	
 	@Override

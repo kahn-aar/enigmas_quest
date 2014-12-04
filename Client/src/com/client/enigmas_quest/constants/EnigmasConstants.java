@@ -12,4 +12,7 @@ public class EnigmasConstants {
 
 	public static final String INTENT_CREATE_ACCOUNT = "intent_create_account";
 	public static final String INTENT_CONNEXION = "intent_connexion";
+	
+	//Constants for keeping datas
+	public static final String ENIGMA_ID = "intent_enigma_id";
 }

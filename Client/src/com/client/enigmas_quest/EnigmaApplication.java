@@ -135,5 +135,52 @@ public class EnigmaApplication extends Application {
 	public Player getPlayer() {
 		return this.player;
 	}
+
+	public Enigma getEngimaById(int id) {
+		RequestRESTAsync async = new RequestRESTAsync();
+		async.execute(EnigmasConstants.REST_GET_ENIGMA);
+		Enigma enigma = null;
+		/*try {
+			String jsonResponse = async.get();
+			JSONObject json = new JSONObject(jsonResponse);
+			if(json != null) {
+				player = new Player(json);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		return new Enigma();
+	}
+
+	public void answerTheQuestion(String answer, int enigmaId) {
+		RequestRESTAsync async = new RequestRESTAsync();
+		async.execute(EnigmasConstants.REST_POST_ENIGMA_RESPONSE);
+		/*try {
+			String jsonResponse = async.get();
+			JSONObject json = new JSONObject(jsonResponse);
+			if(json != null) {
+				player = new Player(json);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		
+	}
 	
 }

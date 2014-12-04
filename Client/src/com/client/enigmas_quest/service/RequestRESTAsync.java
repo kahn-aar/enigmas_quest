@@ -47,9 +47,13 @@ public class RequestRESTAsync extends AsyncTask<Integer, Void, String> {
 				
 				break;
 			case EnigmasConstants.REST_GET_ENIGMA:
-				
+				System.out.println("/enigma?id=lolilol");
 				break;
 			case EnigmasConstants.REST_GET_PLAYER_STATS:
+				
+				break;
+			case EnigmasConstants.REST_POST_ENIGMA_RESPONSE:
+				System.out.println("/enigma?id=lolilol&answer=bouh");
 				
 				break;
 		}
