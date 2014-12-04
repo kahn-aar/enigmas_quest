@@ -29,6 +29,8 @@ import com.client.enigmas_quest.adapter.NavigationDrawerAdapter;
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.DrawerItem;
 import com.client.enigmas_quest.data.Player;
+import com.client.enigmas_quest.data.QuestInformation;
+import com.client.enigmas_quest.data.QuestType;
 import com.client.enigmas_quest.fragments.MapPageFragment;
 import com.client.enigmas_quest.fragments.ParametersPageFragment;
 import com.client.enigmas_quest.fragments.StatsPageFragment;
@@ -153,10 +155,18 @@ public class Map_Activity extends ActionBarActivity implements
 
 	}
 	
-	public void sendMessage(View view) {
-		Intent intent = new Intent(this, EnigmaActivity.class);
-		intent.putExtra(EnigmasConstants.ENIGMA_ID, 4);
-		startActivity(intent);
+	public void answerAQuest(View view) {
+		//TODO : récupérer les infos sur la quete
+		QuestInformation info = new QuestInformation(null, 3, QuestType.QUESTION);
+		switch(info.getType()) {
+			case QUESTION:
+				Intent intent = new Intent(this, EnigmaActivity.class);
+				intent.putExtra(EnigmasConstants.ENIGMA_ID, 4);
+				startActivity(intent);
+				break;
+			case PHOTO:break;
+		}
+		
 	}
 	
 	@Override

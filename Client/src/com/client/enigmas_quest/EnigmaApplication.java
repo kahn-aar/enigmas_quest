@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,13 +13,13 @@ import android.content.res.Configuration;
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Enigma;
 import com.client.enigmas_quest.data.Player;
-import com.client.enigmas_quest.data.Position;
+import com.client.enigmas_quest.data.QuestInformation;
 import com.client.enigmas_quest.service.RequestRESTAsync;
 
 public class EnigmaApplication extends Application {
 
 	private List<Enigma> enigmes = new ArrayList<Enigma>();
-	private List<Position> positions = new ArrayList<Position>();
+	private List<QuestInformation> positions = new ArrayList<QuestInformation>();
 	private Player player = null;
 	
 	@Override
