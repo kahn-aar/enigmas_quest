@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.client.enigmas_quest.PhotoActivity" >
+
+    <TextView
+        android:id="@+id/textViewPhoto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/textViewPhoto" />
+
+    <ImageView
+        android:id="@+id/imageViewPhoto"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="40dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/photoDescription"
+        android:scaleType="fitCenter"
+        android:src="@drawable/takephoto" />
+
+    <Button
+        android:id="@+id/buttonPhoto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:text="@string/buttonPhoto" />
+
+</RelativeLayout>
