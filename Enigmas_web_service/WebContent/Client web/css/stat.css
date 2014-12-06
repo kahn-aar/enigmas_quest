@@ -1,0 +1,22 @@
+#listeJoueur{
+	width: 20%;
+	margin: 0px;
+	padding: 0px;
+	border-right: 1px solid black;
+}
+
+#listeJoueur li{
+	list-style: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+#statjoueur{
+	width: 80%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.joueur{
+	
+}

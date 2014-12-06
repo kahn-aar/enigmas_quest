@@ -1,0 +1,14 @@
+.image-min{
+	width: 150px;
+	height: 80px;
+	border: 1px solid black;
+	margin: 5px;
+}
+
+#corps{
+	padding: 10px;
+}
+
+.div-img{
+	display: inline-block;
+}

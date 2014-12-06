@@ -8,6 +8,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.PathParam;
 
 import com.enigma.jdbc.loader.Controleur;
 import com.enigma.jdbc.loader.LauncherRequest;
@@ -85,12 +87,12 @@ public class WebService {
 		return allPlayer;
 	}
 	
+	
 	@GET
 	@Path("photos")
 	@Produces({"application/xml", "application/json"})
-	public ArrayList<Photo> getAllPhoto() throws SQLException{
+	public ArrayList<Photo> getAllPhoto() throws SQLException {
 		ArrayList<Photo> allPhoto = launcher.rph.getAllPhoto(Controleur.getConn());
-		return allPhoto;
+	    return allPhoto;
 	}
-	
 }
