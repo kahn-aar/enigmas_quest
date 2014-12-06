@@ -136,4 +136,34 @@ public class RequetePhoto {
 		rs.close();
 		return result;
 	}
+	
+	/**
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Photo> getAllPhoto(Connection conn) throws SQLException{
+		ArrayList<Photo> result = new ArrayList<Photo>();
+		int numero, idPosition;
+		String theme, url;
+		
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo");
+		// Execute the query
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			numero = rs.getInt("numero");
+			theme = rs.getString("theme");
+			url = rs.getString("url");
+			idPosition = rs.getInt("positionId");
+			RequetePosition rp = new RequetePosition();
+			result.add(new Photo(rp.getPositionById(conn, idPosition), numero, theme, url));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		return result;
+	}
 }

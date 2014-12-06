@@ -11,6 +11,7 @@ import javax.ws.rs.QueryParam;
 
 import com.enigma.jdbc.loader.Controleur;
 import com.enigma.jdbc.loader.LauncherRequest;
+import com.enigma.jdbc.mapping.Photo;
 import com.enigma.jdbc.mapping.Player;
 import com.enigma.jdbc.mapping.Quetes;
 
@@ -76,6 +77,20 @@ public class WebService {
 		}
 	}
 	
+	@GET
+	@Path("player")
+	@Produces({"application/xml", "application/json"})
+	public ArrayList<Player> getAllPlayer() throws SQLException{
+		ArrayList<Player> allPlayer = launcher.rp.allPlayers(Controleur.getConn());
+		return allPlayer;
+	}
 	
+	@GET
+	@Path("photos")
+	@Produces({"application/xml", "application/json"})
+	public ArrayList<Photo> getAllPhoto(){
+		ArrayList<Photo> allPhoto = launcher.rph.getAllPhoto(Controleur.getConn());
+		return allPhoto;
+	}
 	
 }
