@@ -88,7 +88,7 @@ public class WebService {
 	@GET
 	@Path("photos")
 	@Produces({"application/xml", "application/json"})
-	public ArrayList<Photo> getAllPhoto(){
+	public ArrayList<Photo> getAllPhoto() throws SQLException{
 		ArrayList<Photo> allPhoto = launcher.rph.getAllPhoto(Controleur.getConn());
 		return allPhoto;
 	}
