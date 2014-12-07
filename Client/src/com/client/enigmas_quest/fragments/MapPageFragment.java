@@ -1,39 +1,53 @@
 package com.client.enigmas_quest.fragments;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.client.enigmas_quest.CreateAccountActivity;
-import com.client.enigmas_quest.EnigmaActivity;
-import com.client.enigmas_quest.LoginActivity;
-import com.client.enigmas_quest.Map_Activity;
-import com.client.enigmas_quest.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MapPageFragment extends Fragment {
+public class MapPageFragment extends SupportMapFragment {
 
 	public static final String ITEM_NAME = "item_name";
 	TextView monTexte;
 	
+	GoogleMap mapView;
+	
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+    public void onCreate(Bundle arg0) {
+        super.onCreate(arg0);
+    }
 
-          View view = inflater.inflate(R.layout.fragment_map_one, container,
-                      false);
+    @Override
+    public View onCreateView(LayoutInflater mInflater, ViewGroup arg1,
+            Bundle arg2) {
+        return super.onCreateView(mInflater, arg1, arg2);
+    }
 
-          monTexte = (TextView) view.findViewById(R.id.section_label_one);
+    @Override
+    public void onInflate(Activity arg0, AttributeSet arg1, Bundle arg2) {
+        super.onInflate(arg0, arg1, arg2);
+    }
 
-          monTexte.setText(getArguments().getString(ITEM_NAME));
-          
-          return view;
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mapView = getMap();
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.draggable(true);
+        markerOptions.position(new LatLng(23.231251f, 71.648437f));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker());
+        mapView.addMarker(markerOptions);
     }
 
 	
