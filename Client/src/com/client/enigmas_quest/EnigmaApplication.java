@@ -18,9 +18,21 @@ import com.client.enigmas_quest.service.RequestRESTAsync;
 
 public class EnigmaApplication extends Application {
 
-	private List<Enigma> enigmes = new ArrayList<Enigma>();
-	private List<QuestInformation> positions = new ArrayList<QuestInformation>();
+	/**
+	 * Current player
+	 */
 	private Player player = null;
+	
+	/**
+	 * Enigmes
+	 */
+	private List<Enigma> enigmes = new ArrayList<Enigma>();
+	
+	/**
+	 * Positions
+	 */
+	private List<QuestInformation> positions = new ArrayList<QuestInformation>();
+	
 	
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
@@ -30,7 +42,6 @@ public class EnigmaApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		this.player = new Player();
 	}
 	
 	public void getAllEnigmasPositions() {
