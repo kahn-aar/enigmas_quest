@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,6 +39,35 @@ public class RequeteQuestionReponse {
 			result = rs.getBoolean("vraiOuFaux");
 		}
 		System.out.println(result);
+		return result;
+	}
+	
+	/**
+	 * retourne toutes les questions auxquelles un joueur a répondu
+	 * @param conn
+	 * @param login
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Question> getAllQuestionByLogin(Connection conn, String login) throws SQLException{
+		ArrayList<Question> result = new ArrayList<Question>();
+		int numero;
+		
+		// Get a statement from the connection
+		Statement stmt = conn.createStatement();
+
+		// Execute the query
+		ResultSet rs = stmt.executeQuery("SELECT numeroQ FROM questionReponse WHERE login = ?");
+
+		// Loop through the result set
+		while (rs.next()) {
+			numero = rs.getInt("numero");
+			RequeteQuestion rq = new RequeteQuestion();
+			result.add(rq.getQuestionByNum(conn, numero));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	

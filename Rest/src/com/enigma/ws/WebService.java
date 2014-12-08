@@ -15,6 +15,7 @@ import com.enigma.jdbc.loader.Controleur;
 import com.enigma.jdbc.loader.LauncherRequest;
 import com.enigma.jdbc.mapping.Photo;
 import com.enigma.jdbc.mapping.Player;
+import com.enigma.jdbc.mapping.Question;
 import com.enigma.jdbc.mapping.Quetes;
 
 /**
@@ -70,7 +71,7 @@ public class WebService {
 	@GET
 	@Path("quest")
 	@Produces({"application/xml", "application/json"})
-	public Quetes questById(@QueryParam("login") int id) {
+	public Quetes questById(@QueryParam("num") int id) {
 		try {
 			Quetes quest = launcher.rquete.getQueteByNum(Controleur.getConn(), id);
 			return quest;
@@ -95,4 +96,13 @@ public class WebService {
 		ArrayList<Photo> allPhoto = launcher.rph.getAllPhoto(Controleur.getConn());
 	    return allPhoto;
 	}
+	
+	@GET
+	@Path("details")
+	@Produces({"application/xml", "application/json"})
+	public ArrayList<Question> getQuestionsByLogin(@QueryParam("login") String login) throws SQLException{
+		ArrayList<Question> result = launcher.rqr.getAllQuestionByLogin(Controleur.getConn(), login);
+		return result;
+	}
+	
 }

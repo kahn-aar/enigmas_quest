@@ -5,6 +5,7 @@ import com.enigma.jdbc.request.RequetePhoto;
 import com.enigma.jdbc.request.RequetePlayer;
 import com.enigma.jdbc.request.RequetePosition;
 import com.enigma.jdbc.request.RequeteQuestion;
+import com.enigma.jdbc.request.RequeteQuestionReponse;
 import com.enigma.jdbc.request.RequeteQuete;
 import com.enigma.jdbc.request.RequeteVideo;
 
@@ -23,5 +24,7 @@ public RequetePlayer rp = new RequetePlayer();
 	public RequeteQuete rquete = new RequeteQuete();
 	
 	public RequetePosition rpos = new RequetePosition();
+	
+	public RequeteQuestionReponse rqr = new RequeteQuestionReponse();
 
 }
