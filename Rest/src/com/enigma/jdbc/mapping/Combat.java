@@ -1,10 +1,15 @@
 package com.enigma.jdbc.mapping;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
  * Classe de modele, concernant les combats
  * @author leovidal
  *
  */
+@XmlRootElement
+@XmlSeeAlso({Question.class})
 public class Combat extends Quetes{
 
 	private Player player1;

@@ -19,8 +19,9 @@ $( document ).ready(function() {
     });
 
     //details joueur
-    $(".joueur").click(function(){
-        var loginJ = $(this).attr('id');
+    $('body').on('click', '.joueur', function () {
+         var loginJ = $(this).attr('id');
+         $('#statjoueur').append("<h2>"+loginJ+"</h2>");
 
         $.ajax({
             url: url+"details",
@@ -29,9 +30,9 @@ $( document ).ready(function() {
             type: "GET",
             success: function(xml){
                 $(xml).find('question').each(function(){
-                    console.log($(this));
                     var question = $(this).find('question').text();
-                    console.log(question);
+                    var reponse = $(this).find('reponse').text();
+                    $('#statjoueur').append("<div class=\"questionJoueur\"><h3>"+question+"</h3><p>"+reponse+"</p></div>");
                 });
             },
             error: function(xhr, msg){

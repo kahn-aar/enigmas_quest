@@ -2,7 +2,10 @@
 	width: 20%;
 	margin: 0px;
 	padding: 0px;
+	height: 100%;
 	border-right: 1px solid black;
+	display: inline-block;
+	vertical-align: top;
 }
 
 #listeJoueur li{
@@ -12,11 +15,13 @@
 }
 
 #statjoueur{
-	width: 80%;
+	width: 75%;
 	margin: 0px;
 	padding: 0px;
+	display: inline-block;
 }
 
 .joueur{
 	
 }
+

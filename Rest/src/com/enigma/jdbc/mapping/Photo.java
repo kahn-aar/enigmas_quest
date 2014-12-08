@@ -1,10 +1,13 @@
 package com.enigma.jdbc.mapping;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Classe du modèle concernant les photos
  * @author leovidal
  *
  */
+@XmlRootElement
 public class Photo extends Multimedia{
 
 	/**
@@ -19,6 +22,8 @@ public class Photo extends Multimedia{
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	public Photo(){
+		
+	}
 	
 }

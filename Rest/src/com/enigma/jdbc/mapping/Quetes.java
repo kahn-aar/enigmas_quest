@@ -1,6 +1,7 @@
 package com.enigma.jdbc.mapping;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * 
@@ -8,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement
+@XmlSeeAlso({Position.class})
 public abstract class Quetes {
 
 	private Position position;

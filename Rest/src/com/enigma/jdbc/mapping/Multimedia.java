@@ -1,10 +1,13 @@
 package com.enigma.jdbc.mapping;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * 
  * @author leovidal
  *
  */
+@XmlRootElement
 public abstract class Multimedia extends Quetes{
 
 	private String theme, url;
@@ -20,6 +23,10 @@ public abstract class Multimedia extends Quetes{
 		super(position, numero);
 		this.theme = theme;
 		this.url = url;
+	}
+	
+	public Multimedia(){
+		
 	}
 
 	public String getTheme() {

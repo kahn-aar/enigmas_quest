@@ -16,7 +16,9 @@ import com.enigma.jdbc.loader.LauncherRequest;
 import com.enigma.jdbc.mapping.Photo;
 import com.enigma.jdbc.mapping.Player;
 import com.enigma.jdbc.mapping.Question;
+import com.enigma.jdbc.mapping.QuestionReponse;
 import com.enigma.jdbc.mapping.Quetes;
+import com.enigma.jdbc.mapping.Reponse;
 
 /**
  * 
@@ -100,8 +102,9 @@ public class WebService {
 	@GET
 	@Path("details")
 	@Produces({"application/xml", "application/json"})
-	public ArrayList<Question> getQuestionsByLogin(@QueryParam("login") String login) throws SQLException{
-		ArrayList<Question> result = launcher.rqr.getAllQuestionByLogin(Controleur.getConn(), login);
+	public ArrayList<QuestionReponse> getStatByLogin(@QueryParam("login") String login) throws SQLException{
+		ArrayList<QuestionReponse> result = launcher.rqr.getQRByLogin(Controleur.getConn(), login);
+		
 		return result;
 	}
 	
