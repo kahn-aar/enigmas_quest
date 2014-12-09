@@ -53,6 +53,14 @@
                 android:value="com.client.enigmas_quest.Map_Activity" />
         </activity>
         <activity
+            android:name="com.client.enigmas_quest.BattleActivity"
+            android:label="@string/title_activity_battle"
+            android:parentActivityName="com.client.enigmas_quest.Map_Activity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.client.enigmas_quest.Map_Activity" />
+        </activity>
+        <activity
             android:name="com.client.enigmas_quest.CreateAccountActivity"
             android:label="@string/title_activity_create_account"
             android:parentActivityName="com.client.enigmas_quest.LoginActivity" >
@@ -73,7 +81,7 @@
 		    android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyB5lPakOZ0MgHS2SM-bCjeKWK1LEZtlh2o" />
+            android:value="AIzaSyDf3Id3ESIqsniVtIHzghOGv9zAGEHzhUk" />
     </application>
 
 </manifest>

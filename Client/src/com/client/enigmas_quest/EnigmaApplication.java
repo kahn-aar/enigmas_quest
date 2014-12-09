@@ -14,6 +14,8 @@ import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Enigma;
 import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.data.QuestInformation;
+import com.client.enigmas_quest.mappage.Position;
+import com.client.enigmas_quest.mappage.Question;
 import com.client.enigmas_quest.service.RequestRESTAsync;
 
 public class EnigmaApplication extends Application {
@@ -146,10 +148,10 @@ public class EnigmaApplication extends Application {
 		return this.player;
 	}
 
-	public Enigma getEngimaById(int id) {
+	public Question getEngimaById(int id) {
 		RequestRESTAsync async = new RequestRESTAsync();
 		async.execute(EnigmasConstants.REST_GET_ENIGMA);
-		Enigma enigma = null;
+		Question enigma = new Question(new Position(1, 123, 125), 4, "Quel est l'animal ?", "Le serpent", "Le serpent", "Une tartine", "Jackie", "Michel");
 		/*try {
 			String jsonResponse = async.get();
 			JSONObject json = new JSONObject(jsonResponse);
@@ -167,7 +169,7 @@ public class EnigmaApplication extends Application {
 			e.printStackTrace();
 		}*/
 		
-		return new Enigma();
+		return enigma;
 	}
 
 	public void answerTheQuestion(String answer, int enigmaId) {
@@ -191,6 +193,11 @@ public class EnigmaApplication extends Application {
 		}*/
 		
 		
+	}
+
+	public void answerTheBattle(String answer, int enigmaId, boolean time, int opponentId) {
+		RequestRESTAsync async = new RequestRESTAsync();
+		async.execute(EnigmasConstants.REST_POST_BATTLE_RESPONSE);
 	}
 	
 }

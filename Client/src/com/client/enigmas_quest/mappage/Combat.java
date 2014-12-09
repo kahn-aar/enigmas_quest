@@ -5,7 +5,7 @@ package com.client.enigmas_quest.mappage;
  * @author leovidal
  *
  */
-public class Combat extends Quetes{
+public class Combat extends Quetes {
 
 	private Player player1;
 	private Player player2;

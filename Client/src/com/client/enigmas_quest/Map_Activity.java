@@ -139,7 +139,10 @@ public class Map_Activity extends ActionBarActivity implements
 					.getQuestionAnswered());
 			break;
 		case 3:
-			Intent intent = new Intent(Map_Activity.this, PhotoActivity.class);
+			Intent intent = new Intent(Map_Activity.this, BattleActivity.class);
+			intent.putExtra(EnigmasConstants.ENIGMA_ID, 4);
+			intent.putExtra(EnigmasConstants.OPPONENT_ID, 4);
+			intent.putExtra(EnigmasConstants.OPPONENT_NAME, "Miam");
 			startActivity(intent);
 			break;
 		case 5:
