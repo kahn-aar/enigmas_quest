@@ -29,11 +29,26 @@ $( document ).ready(function() {
             dataType: 'xml',
             type: "GET",
             success: function(xml){
-                $(xml).find('question').each(function(){
-                    var question = $(this).find('question').text();
-                    var reponse = $(this).find('reponse').text();
-                    $('#statjoueur').append("<div class=\"questionJoueur\"><h3>"+question+"</h3><p>"+reponse+"</p></div>");
-                });
+                var x = xml.documentElement.childNodes;
+                console.log(x.item(0));
+                //Pour chaque questionReponse
+                for(var i=0; i<x.lenght; i++){
+                    var y = x.item(i);
+                    console.log("bite");
+                }
+
+
+                // $(xml).find('questionReponse').each(function(){
+                //     var question = $(this).find('question').text();
+                //     var solution = $(this).find('queque').find('solution').text();
+                //     var reponseJoueur = $(this).find('reponse').text();
+                //     if(solution == reponseJoueur){
+                //         $('#statjoueur').append("<div class=\"questionJoueur\"><h3>"+question+"</h3><p class=\"juste\">"+reponseJoueur+"</p></div>");
+                //     }else{
+                //         $('#statjoueur').append("<div class=\"questionJoueur\"><h3>"+question+"</h3><p class=\"faux\">"+reponseJoueur+"</p></div>");
+
+                //     }
+                // });
             },
             error: function(xhr, msg){
                 console.log("error");

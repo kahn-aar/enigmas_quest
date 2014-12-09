@@ -1,17 +1,23 @@
 package com.enigma.jdbc.mapping;
 
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sun.xml.internal.txw2.annotation.XmlAttribute;
+import com.sun.xml.internal.txw2.annotation.XmlElement;
 
 /**
  * Classe du modèle concernant les questions
  * @author leovidal
  *
  */
-@XmlRootElement
+@XmlRootElement(name = "queque")
 public class Question extends Quetes{
 
 	private String question;
+	
 	private String reponse;
+	
 	private String possible1, possible2, possible3, possible4;
 	
 	
