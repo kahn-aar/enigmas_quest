@@ -33,6 +33,7 @@ body{
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
+	height: 100%;
 }
 
 #footer{
@@ -68,8 +69,6 @@ li.menu{
 #navigation li a:hover{
 	color: white;
 	background-color: #2C3E50;
-	/*background-color: #E74C3C;
-	color: #1A2530;*/
 }
 
 #banner h1{

@@ -1,40 +1,57 @@
 package com.enigma.jdbc.mapping;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 /**
  * 
  * @author leovidal
  *
  */
+@XmlRootElement
 public class Reponse {
 
 	private String question; 
-	private String reponse;
+	private String reponseJoueur;
+	private String solution;
 	private boolean juste;
+	
+	public Reponse(){
+		
+	}
 	
 	/**
 	 * 
 	 * @param question
-	 * @param reponse
+	 * @param reponseJoueur
+	 * @param solution
 	 * @param juste
 	 */
-	public Reponse(String question, String reponse, boolean juste) {
+	public Reponse(String question, String reponseJoueur, String solution,
+			boolean juste) {
 		super();
 		this.question = question;
-		this.reponse = reponse;
+		this.reponseJoueur = reponseJoueur;
+		this.solution = solution;
 		this.juste = juste;
 	}
-	
 	public String getQuestion() {
 		return question;
 	}
 	public void setQuestion(String question) {
 		this.question = question;
 	}
-	public String getReponse() {
-		return reponse;
+	public String getReponseJoueur() {
+		return reponseJoueur;
 	}
-	public void setReponse(String reponse) {
-		this.reponse = reponse;
+	public void setReponseJoueur(String reponseJoueur) {
+		this.reponseJoueur = reponseJoueur;
+	}
+	public String getSolution() {
+		return solution;
+	}
+	public void setSolution(String solution) {
+		this.solution = solution;
 	}
 	public boolean isJuste() {
 		return juste;
@@ -42,6 +59,8 @@ public class Reponse {
 	public void setJuste(boolean juste) {
 		this.juste = juste;
 	}
+	
+	
 	
 	
 }

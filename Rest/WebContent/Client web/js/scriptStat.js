@@ -2,7 +2,7 @@ $( document ).ready(function() {
     //Adresse du web service
     var url = "http://localhost:8080/EnigmaRest/rest/enigma/";
 
-	//Liste des joueurs
+	//Affichage de la liste des joueurs
 	$.ajax({
         url: url+"player",
         dataType: 'xml',
@@ -18,37 +18,51 @@ $( document ).ready(function() {
         }
     });
 
-    //details joueur
+    //details joueur, au clique sur un joueur dans la liste
     $('body').on('click', '.joueur', function () {
-         var loginJ = $(this).attr('id');
-         $('#statjoueur').append("<h2>"+loginJ+"</h2>");
+        //clean
+        $('.titre-joueur').remove();
+        $('.itemStat').remove();
+        $('.pourcentBon').remove();
 
+        //titre joueur
+        var loginJ = $(this).attr('id');
+        $('#statjoueur').append("<h2 class=\"titre-joueur\">"+loginJ+"</h2>");
+
+        //pourcentage de bonne réponse
+        $.ajax({
+            url: url+"stat",
+            data: { login: loginJ },
+            dataType: 'xml',
+            type: "GET",
+            success: function(xml){
+                var pourcentageBon = $(xml).find('pourcentQuestion').text();
+                $('#statjoueur').append('<div class=\"pourcentBon\"><p>Pourcentage de bonne reponse : '+pourcentageBon+' %</p></div>');
+            },
+            error: function(xhr, msg){
+                console.log("error");
+            }
+        });
+
+        //détails des réponses aux questions
         $.ajax({
             url: url+"details",
             data: { login: loginJ },
             dataType: 'xml',
             type: "GET",
             success: function(xml){
-                var x = xml.documentElement.childNodes;
-                console.log(x.item(0));
-                //Pour chaque questionReponse
-                for(var i=0; i<x.lenght; i++){
-                    var y = x.item(i);
-                    console.log("bite");
-                }
+                $(xml).find('reponse').each(function(){
+                    var question = $(this).find('question').text();
+                    var reponseJ = $(this).find('reponseJoueur').text();
+                    var solution = $(this).find('solution').text();
+                    var juste = $(this).find('juste').text();
+                    if(juste == 'true'){
+                        $('#statjoueur').append('<div class=\"itemStat\"><h3>'+question+'</h3><p class=\"reponse-juste\">'+reponseJ+'</p></div>');
+                    }else{
+                        $('#statjoueur').append('<div class=\"itemStat\"><h3>'+question+'</h3><p class=\"reponse-fausse\">'+reponseJ+'</p><p>Solution : '+solution+'</p></div>');
 
-
-                // $(xml).find('questionReponse').each(function(){
-                //     var question = $(this).find('question').text();
-                //     var solution = $(this).find('queque').find('solution').text();
-                //     var reponseJoueur = $(this).find('reponse').text();
-                //     if(solution == reponseJoueur){
-                //         $('#statjoueur').append("<div class=\"questionJoueur\"><h3>"+question+"</h3><p class=\"juste\">"+reponseJoueur+"</p></div>");
-                //     }else{
-                //         $('#statjoueur').append("<div class=\"questionJoueur\"><h3>"+question+"</h3><p class=\"faux\">"+reponseJoueur+"</p></div>");
-
-                //     }
-                // });
+                    }
+                });
             },
             error: function(xhr, msg){
                 console.log("error");

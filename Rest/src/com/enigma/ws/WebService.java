@@ -19,6 +19,7 @@ import com.enigma.jdbc.mapping.Question;
 import com.enigma.jdbc.mapping.QuestionReponse;
 import com.enigma.jdbc.mapping.Quetes;
 import com.enigma.jdbc.mapping.Reponse;
+import com.enigma.jdbc.mapping.Statistique;
 
 /**
  * 
@@ -102,10 +103,26 @@ public class WebService {
 	@GET
 	@Path("details")
 	@Produces({"application/xml", "application/json"})
-	public ArrayList<QuestionReponse> getStatByLogin(@QueryParam("login") String login) throws SQLException{
-		ArrayList<QuestionReponse> result = launcher.rqr.getQRByLogin(Controleur.getConn(), login);
-		
+	public ArrayList<Reponse> getStatByLogin(@QueryParam("login") String login) throws SQLException{
+		ArrayList<Reponse> result = launcher.rr.getReponseByLogin(Controleur.getConn(), login);
 		return result;
+	}
+	
+	@GET
+	@Path("stat")
+	@Produces({"application/xml", "application/json"})
+	public Statistique getPourcentageByLogin(@QueryParam("login") String login) throws SQLException{
+		int nbJuste = 0;
+		System.out.println("bite");
+		ArrayList<Reponse> liste = launcher.rr.getReponseByLogin(Controleur.getConn(), login);
+		for(int i=0; i<liste.size(); i++){
+			if (liste.get(i).isJuste()){
+				nbJuste++;
+				System.out.println(nbJuste);
+			}
+		}
+		System.out.println(liste.size());
+		return new Statistique((float)nbJuste/(float)liste.size()*100);
 	}
 	
 }
