@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -38,6 +39,75 @@ public class RequeteQuestionReponse {
 			result = rs.getBoolean("vraiOuFaux");
 		}
 		System.out.println(result);
+		return result;
+	}
+	
+	/**
+	 * retourne toutes les questions auxquelles un joueur a répondu
+	 * @param conn
+	 * @param login
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Question> getAllQuestionByLogin(Connection conn, String login) throws SQLException{
+		ArrayList<Question> result = new ArrayList<Question>();
+		int numero;
+		
+		// Get a statement from the connection
+		Statement stmt = conn.createStatement();
+
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT numeroQ FROM questionReponse WHERE login = ?");
+		// Execute the query
+		st.setString(1, login);
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			numero = rs.getInt("numeroQ");
+			RequeteQuestion rq = new RequeteQuestion();
+			result.add(rq.getQuestionByNum(conn, numero));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		stmt.close();
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param conn
+	 * @param login
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<QuestionReponse> getQRByLogin(Connection conn, String login) throws SQLException{
+		ArrayList<QuestionReponse> result = new ArrayList<QuestionReponse>();
+		int numero;
+		boolean juste;
+		String reponse;
+		
+		// Get a statement from the connection
+		Statement stmt = conn.createStatement();
+
+		// Get a statement from the connection
+		PreparedStatement st = conn.prepareStatement("SELECT numeroQ, vraiOuFaux, reponse FROM questionReponse WHERE login = ?");
+		// Execute the query
+		st.setString(1, login);
+		ResultSet rs = st.executeQuery();
+
+		// Loop through the result set
+		while (rs.next()) {
+			numero = rs.getInt("numeroQ");
+			juste = rs.getBoolean("vraiOuFaux");
+			reponse = rs.getString("reponse");
+			RequeteQuestion rq = new RequeteQuestion();
+			RequetePlayer rp = new RequetePlayer();
+			result.add(new QuestionReponse(rp.getPlayerByLogin(conn, login), rq.getQuestionByNum(conn, numero), juste, reponse));
+		}
+		// Close the result set, statement and the connection
+		rs.close();
+		stmt.close();
 		return result;
 	}
 	

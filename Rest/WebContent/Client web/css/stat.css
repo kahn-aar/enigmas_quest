@@ -1,0 +1,55 @@
+#listeJoueur{
+	width: 20%;
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+	border-right: 1px solid black;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#listeJoueur li{
+	list-style: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	line-height: 30px;
+}
+
+#listeJoueur li:hover{
+	color: white;
+	background-color: #2C3E50;
+	cursor:pointer;
+}
+
+#listeP{
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+}
+
+#statjoueur{
+	width: 75%;
+	margin: 0px;
+	padding: 0px;
+	display: inline-block;
+}
+
+.joueur{
+	height: 30px;
+	width: 85%;
+	padding-left: 15%;
+}
+
+.reponse-juste{
+	color: green;
+}
+
+.reponse-fausse{
+	color: red;
+}
+
+#titreListeJoueur{
+	padding-left: 5%;
+	width: 95%;
+}
