@@ -17,6 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity for the login
+ * Main activity
+ * 
+ * @author Nicolas
+ *
+ */
 public class LoginActivity extends ActionBarActivity {
 
 	EnigmaApplication application;

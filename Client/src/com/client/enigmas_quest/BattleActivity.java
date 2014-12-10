@@ -17,6 +17,12 @@ import com.client.enigmas_quest.fragments.DialogBattleFragment;
 import com.client.enigmas_quest.listener.BattleListener;
 import com.client.enigmas_quest.mappage.Question;
 
+/**
+ * Activity for battle between two players
+ * 
+ * @author Nicolas
+ *
+ */
 public class BattleActivity extends ActionBarActivity {
 
 

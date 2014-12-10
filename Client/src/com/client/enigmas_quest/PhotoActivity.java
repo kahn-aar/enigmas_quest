@@ -21,6 +21,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Activity for taking photos
+ * 
+ * @author Nicolas
+ *
+ */
 public class PhotoActivity extends Activity {
 	private TextView textViewPhoto;
 	private ImageView imageViewPhoto;

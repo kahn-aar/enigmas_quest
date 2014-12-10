@@ -32,6 +32,12 @@ import com.client.enigmas_quest.fragments.MapPageFragment;
 import com.client.enigmas_quest.fragments.ParametersPageFragment;
 import com.client.enigmas_quest.fragments.StatsPageFragment;
 
+/**
+ * Base activity, containing the fragments
+ * 
+ * @author Nicolas
+ *
+ */
 public class Map_Activity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 

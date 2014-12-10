@@ -16,6 +16,12 @@ import android.widget.Toast;
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Player;
 
+/**
+ * Activity for the creation of accounts
+ * 
+ * @author Nicolas
+ *
+ */
 public class CreateAccountActivity extends Activity {
 
 	EnigmaApplication application;

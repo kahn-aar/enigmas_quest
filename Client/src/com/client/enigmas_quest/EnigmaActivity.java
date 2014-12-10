@@ -14,6 +14,12 @@ import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.listener.AnswerListener;
 import com.client.enigmas_quest.mappage.Question;
 
+/**
+ * Activity for answer an enigma
+ * 
+ * @author Nicolas
+ *
+ */
 public class EnigmaActivity extends Activity {
 
 	private static final String STATE_ENIGMA_ID = "enigma_id";
