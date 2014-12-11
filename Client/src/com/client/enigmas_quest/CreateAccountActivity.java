@@ -68,7 +68,7 @@ public class CreateAccountActivity extends Activity {
                 
                 //On pars vers la page Map
                 Intent intent = new Intent(CreateAccountActivity.this, Map_Activity.class);
-                intent.getIntExtra(EnigmasConstants.INTENT_CREATE_ACCOUNT, player.getId());
+                //intent.getIntExtra(EnigmasConstants.INTENT_CREATE_ACCOUNT, player.getId());
                 startActivity(intent);
                 CreateAccountActivity.this.finish();
             }

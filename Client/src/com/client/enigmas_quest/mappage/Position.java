@@ -1,5 +1,8 @@
 package com.client.enigmas_quest.mappage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Classe du modèle concernant les positions
  * 
@@ -11,6 +14,12 @@ public class Position {
 	private int id;
 	private float longitude;
 	private float latitude;
+	
+	public Position(JSONObject json) throws JSONException {
+		this.id = json.getInt("id");
+		this.longitude = Float.parseFloat(json.getString("longitude"));
+		this.latitude = Float.parseFloat(json.getString("latitude"));
+	}
 
 	/**
 	 * Constructeur par champs
