@@ -12,7 +12,9 @@ import java.util.Map;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	
 	private HttpClient httpclient = new DefaultHttpClient();
 	
-	private final String baseUrl = "http://192.168.0.104:8080/EnigmaRest/rest/enigma";
+	private final String baseUrl = "http://10.234.2.66:8080/EnigmaRest/rest/enigma";
 	
 	private int requestType;
 	
@@ -39,26 +41,65 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	@Override
 	protected JSONObject doInBackground(String... arg0) {
 		JSONObject object = null;
+		String url = "";
+		Map<String, String> hm = new HashMap<String, String>();
 		switch (this.requestType) {
 			case EnigmasConstants.REST_AUTHENTICATION:
 				if(arg0.length == 2) {
-					Map<String, String> hm = new HashMap<String, String>();
+					
 					hm.put("login", arg0[0]);
 					hm.put("password", arg0[1]);
-					String url = addParametersToUrl(this.baseUrl+"/login", hm);
+					url = addParametersToUrl(this.baseUrl+"/login", hm);
+					System.out.println(url);
 
 					object = responseTOJSON(executeRequestGet(url));
 				}
 				break;
 			case EnigmasConstants.REST_ACOUNT_CREATION:
 				if(arg0.length == 2) {
-					Map<String, String> hm = new HashMap<String, String>();
-					hm.put("login", arg0[0]);
-					hm.put("password", arg0[1]);
+					HttpClient httpClient = new DefaultHttpClient();
+		            HttpPost post = new HttpPost(this.baseUrl + "/register");
+		            post.setHeader("content-type", "application/json");
+
+		            //Construimos el objeto cliente en formato JSON
+		            JSONObject dato = new JSONObject();
+
+		            try {
+		                dato.put("login", arg0[0]);
+		                dato.put("password", arg0[1]);
+
+		                StringEntity entity = new StringEntity(dato.toString());
+		                post.setEntity(entity);
+
+		                httpClient.execute(post);
+		            } catch (Exception e) {
+		            	
+		            }
+		            
 				}
 				break;	
 			case EnigmasConstants.REST_GET_ALL_POSITIONS:
-				String url = this.baseUrl+"/allQuest";
+				url = this.baseUrl+"/allQuest";
+				object = responseTOJSON(executeRequestGet(url));
+				break;
+			case EnigmasConstants.REST_GET_ENIGMA:
+				hm.put("num", arg0[0]);
+				
+				url = addParametersToUrl(this.baseUrl+"/quest", hm);
+				object = responseTOJSON(executeRequestGet(url));
+				break;
+			case EnigmasConstants.REST_GET_PLAYER_STATS:
+				hm.put("login", arg0[0]);
+				
+				url = addParametersToUrl(this.baseUrl+"/details", hm);
+				object = responseTOJSON(executeRequestGet(url));
+				break;
+			case EnigmasConstants.REST_POST_ENIGMA_RESPONSE:
+				hm.put("num", arg0[0]);
+				hm.put("login", arg0[1]);
+				hm.put("answer", arg0[2]);
+				
+				url = addParametersToUrl(this.baseUrl+"/quest", hm);
 				object = responseTOJSON(executeRequestGet(url));
 				break;
 		}

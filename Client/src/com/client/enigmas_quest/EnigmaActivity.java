@@ -48,7 +48,7 @@ public class EnigmaActivity extends Activity {
 			if (intent != null) {
 	            id = intent.getIntExtra(EnigmasConstants.ENIGMA_ID, -1);
 	            //Récupération des données de la quête
-	            Question enigme = application.getEngimaById(id);
+	            Question enigme = (Question) application.getEngimaById(id);
 	    		name = "bonjour";
 	    		description = enigme.getQuestion();
 	    		reponses = new ArrayList<String>(4);

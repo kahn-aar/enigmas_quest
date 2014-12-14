@@ -17,6 +17,7 @@ import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.data.QuestInformation;
 import com.client.enigmas_quest.mappage.Position;
 import com.client.enigmas_quest.mappage.Question;
+import com.client.enigmas_quest.mappage.Quetes;
 import com.client.enigmas_quest.service.RequestRESTAsync;
 
 public class EnigmaApplication extends Application {
@@ -72,29 +73,9 @@ public class EnigmaApplication extends Application {
 		}
 	}
 	
-	public void getSpecificEnigma(int engimaId) {
-		
-	}
-	
 	public Player createNewAccount(String pseudo, String password) {
-		/*String crypto = "Mon appli est trop cool";
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_ACOUNT_CREATION);
-		Player player = null;
-		try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
-			player = new Player(json);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_ACOUNT_CREATION);
+		async.execute(pseudo, password);
 		
 		return player;
 	}
@@ -111,15 +92,14 @@ public class EnigmaApplication extends Application {
 		return this.player;
 	}
 
-	public Question getEngimaById(int id) {
+	public Quetes getEngimaById(int id) {
 		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_GET_ENIGMA);
-		async.execute();
-		Question enigma = new Question(new Position(1, 123, 125), 4, "Quel est l'animal ?", "Le serpent", "Le serpent", "Une tartine", "Jackie", "Michel");
-		/*try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
+		async.execute(String.valueOf(id));
+		Question enigma = null;
+		try {
+			JSONObject json = async.get();
 			if(json != null) {
-				player = new Player(json);
+				enigma = new Question(json);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -127,34 +107,14 @@ public class EnigmaApplication extends Application {
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		} 
 		
 		return enigma;
 	}
 
 	public void answerTheQuestion(String answer, int enigmaId) {
 		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_ENIGMA_RESPONSE);
-		async.execute();
-		/*try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
-			if(json != null) {
-				player = new Player(json);
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+		async.execute(String.valueOf(enigmaId), player.getName(), answer);
 		
 	}
 

@@ -66,9 +66,8 @@ public class CreateAccountActivity extends Activity {
                 // ENVOYER LE MESSAGE AVEC LES INFORMATIONS
                 Player player = application.createNewAccount(emailText, passwordText);
                 
-                //On pars vers la page Map
-                Intent intent = new Intent(CreateAccountActivity.this, Map_Activity.class);
-                //intent.getIntExtra(EnigmasConstants.INTENT_CREATE_ACCOUNT, player.getId());
+                //On pars vers la page Connexion
+                Intent intent = new Intent(CreateAccountActivity.this, LoginActivity.class);
                 startActivity(intent);
                 CreateAccountActivity.this.finish();
             }
