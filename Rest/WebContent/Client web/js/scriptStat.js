@@ -24,6 +24,7 @@ $( document ).ready(function() {
         $('.titre-joueur').remove();
         $('.itemStat').remove();
         $('.pourcentBon').remove();
+        $('.titre-reponse').remove();
 
         //titre joueur
         var loginJ = $(this).attr('id');
@@ -38,6 +39,7 @@ $( document ).ready(function() {
             success: function(xml){
                 var pourcentageBon = $(xml).find('pourcentQuestion').text();
                 $('#statjoueur').append('<div class=\"pourcentBon\"><p>Pourcentage de bonne reponse : '+pourcentageBon+' %</p></div>');
+                $('#statjoueur').append('<h4 class=\"titre-reponse\">Reponses de '+loginJ+' :</h4>');
             },
             error: function(xhr, msg){
                 console.log("error");
@@ -57,9 +59,9 @@ $( document ).ready(function() {
                     var solution = $(this).find('solution').text();
                     var juste = $(this).find('juste').text();
                     if(juste == 'true'){
-                        $('#statjoueur').append('<div class=\"itemStat\"><h3>'+question+'</h3><p class=\"reponse-juste\">'+reponseJ+'</p></div>');
+                        $('#statjoueur').append('<div class=\"itemStat\"><h5>'+question+'</h5><p class=\"reponse-juste\">'+reponseJ+'</p></div>');
                     }else{
-                        $('#statjoueur').append('<div class=\"itemStat\"><h3>'+question+'</h3><p class=\"reponse-fausse\">'+reponseJ+'</p><p>Solution : '+solution+'</p></div>');
+                        $('#statjoueur').append('<div class=\"itemStat\"><h5>'+question+'</h5><p class=\"reponse-fausse\">'+reponseJ+'</p><p>Solution : '+solution+'</p></div>');
 
                     }
                 });

@@ -29,9 +29,10 @@
 }
 
 #statjoueur{
-	width: 75%;
+	width: 73%;
 	margin: 0px;
 	padding: 0px;
+	padding-left: 2%;
 	display: inline-block;
 }
 
