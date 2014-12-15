@@ -10,11 +10,13 @@ import org.json.JSONObject;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.location.Location;
 
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Enigma;
 import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.data.QuestInformation;
+import com.client.enigmas_quest.mappage.Combat;
 import com.client.enigmas_quest.mappage.Position;
 import com.client.enigmas_quest.mappage.Question;
 import com.client.enigmas_quest.mappage.Quetes;
@@ -125,6 +127,32 @@ public class EnigmaApplication extends Application {
 
 	public List<QuestInformation> getPositions() {
 		return positions;
+	}
+
+	public Combat getBattle(String name) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_GET_BATTLE);
+		async.execute(name);
+		Combat enigma = null;
+		try {
+			JSONObject json = async.get();
+			if(json != null) {
+				enigma = new Combat(json);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		return enigma;
+	}
+
+	public void sendPositionToServer(Location position) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_POS_PLAYER);
+		async.execute(String.valueOf(position.getLatitude()), String.valueOf(position.getLongitude()));
+		
 	}
 	
 }

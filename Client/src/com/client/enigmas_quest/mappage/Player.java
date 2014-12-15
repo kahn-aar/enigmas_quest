@@ -1,5 +1,8 @@
 package com.client.enigmas_quest.mappage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Classe du modèle concernant les joueurs
  * 
@@ -30,6 +33,15 @@ public class Player {
 		this.points = points;
 		this.quetesRealisees = quetesRealisees;
 		this.position = position;
+	}
+
+	public Player(JSONObject json) {
+		try {
+			this.login = json.getString("login");
+			this.points = json.getInt("points");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getLogin() {

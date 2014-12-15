@@ -9,6 +9,7 @@ public class EnigmasConstants {
 	public static final int REST_POST_ENIGMA_RESPONSE = 5;
 	public static final int REST_POST_POS_PLAYER = 6;
 	public static final int REST_POST_BATTLE_RESPONSE = 7;
+	public static final int REST_GET_BATTLE = 8;
 	
 
 	public static final String INTENT_CREATE_ACCOUNT = "intent_create_account";

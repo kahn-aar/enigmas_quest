@@ -30,7 +30,7 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	
 	private HttpClient httpclient = new DefaultHttpClient();
 	
-	private final String baseUrl = "http://10.234.2.66:8080/EnigmaRest/rest/enigma";
+	private final String baseUrl = "http://10.232.51.175:8080/EnigmaRest/rest/enigma";
 	
 	private int requestType;
 	
@@ -94,12 +94,25 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 				url = addParametersToUrl(this.baseUrl+"/details", hm);
 				object = responseTOJSON(executeRequestGet(url));
 				break;
+			case EnigmasConstants.REST_GET_BATTLE:
+				hm.put("login", arg0[0]);
+				
+				url = addParametersToUrl(this.baseUrl+"/battle", hm);
+				object = responseTOJSON(executeRequestGet(url));
+				break;
 			case EnigmasConstants.REST_POST_ENIGMA_RESPONSE:
 				hm.put("num", arg0[0]);
 				hm.put("login", arg0[1]);
 				hm.put("answer", arg0[2]);
 				
 				url = addParametersToUrl(this.baseUrl+"/quest", hm);
+				object = responseTOJSON(executeRequestGet(url));
+				break;
+			case EnigmasConstants.REST_POST_POS_PLAYER:
+				hm.put("latitude", arg0[0]);
+				hm.put("longitude", arg0[1]);
+				
+				url = addParametersToUrl(this.baseUrl+"/pos", hm);
 				object = responseTOJSON(executeRequestGet(url));
 				break;
 		}
