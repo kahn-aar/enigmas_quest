@@ -1,7 +1,10 @@
 package com.client.enigmas_quest;
 
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONException;
 
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Player;
@@ -72,17 +75,23 @@ public class LoginActivity extends ActionBarActivity {
                 }
 				
 				// ENVOYER LE MESSAGE AVEC LES INFORMATIONS
-                Player player = application.connexion(pseudo.getText().toString(), password.getText().toString());
-                
-                if(player != null) {
-					Intent intent = new Intent(LoginActivity.this, Map_Activity.class);
-	                intent.getIntExtra(EnigmasConstants.INTENT_CONNEXION, 3);
-	                startActivity(intent);
-                }
-                else {
-                	Toast.makeText(LoginActivity.this, R.string.error_account_password, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                Player player;
+				try {
+					player = application.loginOnServer(pseudo.getText().toString(), password.getText().toString());
+					application.getAllEnigmasPositions();
+					if(player != null) {
+						Intent intent = new Intent(LoginActivity.this, Map_Activity.class);
+		                intent.getIntExtra(EnigmasConstants.INTENT_CONNEXION, 3);
+		                startActivity(intent);
+	                }
+	                else {
+	                	Toast.makeText(LoginActivity.this, R.string.error_account_password, Toast.LENGTH_SHORT).show();
+	                    return;
+	                }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}      
 			}
 		});
 		

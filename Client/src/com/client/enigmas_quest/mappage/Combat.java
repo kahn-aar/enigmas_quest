@@ -1,5 +1,8 @@
 package com.client.enigmas_quest.mappage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Classe de modele, concernant les combats
  * @author leovidal
@@ -25,6 +28,16 @@ public class Combat extends Quetes {
 		this.player1 = player1;
 		this.player2 = player2;
 		this.question = question;
+	}
+
+	public Combat(JSONObject json) {
+		try {
+			this.question = new Question((JSONObject) json.get("question"));
+			this.player1 = new Player((JSONObject) json.get("player1"));
+			this.player2 = new Player((JSONObject) json.get("player2"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Player getPlayer1() {

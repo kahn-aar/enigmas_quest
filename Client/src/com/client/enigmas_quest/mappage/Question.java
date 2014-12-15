@@ -1,5 +1,8 @@
 package com.client.enigmas_quest.mappage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Classe du modèle concernant les questions
  * @author leovidal
@@ -33,6 +36,21 @@ public class Question extends Quetes{
 		this.possible2 = possible2;
 		this.possible3 = possible3;
 		this.possible4 = possible4;
+	}
+
+	public Question(JSONObject json) {
+		super();
+		try {
+			this.question = json.getString("question");
+			this.reponse = json.getString("reponse");
+			this.possible1 = json.getString("possible1");
+			this.possible2 = json.getString("possible2");
+			this.possible3 = json.getString("possible3");
+			this.possible4 = json.getString("possible4");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public String getQuestion() {

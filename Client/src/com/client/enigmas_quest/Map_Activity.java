@@ -101,7 +101,7 @@ public class Map_Activity extends ActionBarActivity implements
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		application.getAllEnigmasPositions();
+		
 
 		if (savedInstanceState == null) {
 			onSelectItem(1);

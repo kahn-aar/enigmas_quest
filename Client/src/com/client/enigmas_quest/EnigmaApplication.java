@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.location.Location;
 
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.Enigma;
 import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.data.QuestInformation;
+import com.client.enigmas_quest.mappage.Combat;
 import com.client.enigmas_quest.mappage.Position;
 import com.client.enigmas_quest.mappage.Question;
+import com.client.enigmas_quest.mappage.Quetes;
 import com.client.enigmas_quest.service.RequestRESTAsync;
 
 public class EnigmaApplication extends Application {
@@ -25,10 +29,6 @@ public class EnigmaApplication extends Application {
 	 */
 	private Player player = null;
 	
-	/**
-	 * Enigmes
-	 */
-	private List<Enigma> enigmes = new ArrayList<Enigma>();
 	
 	/**
 	 * Positions
@@ -46,100 +46,46 @@ public class EnigmaApplication extends Application {
 		super.onCreate();
 	}
 	
-	public void getAllEnigmasPositions() {
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_GET_ALL_POSITIONS);
-		/*try {
-			String jsonResponse = async.get();
-			JSONArray json = new JSONArray(jsonResponse);
-			for (int i = 0; i < json.length(); i++) {
-				positions.add(new Position(json.getJSONObject(i)));
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
-	}
-	
-	public void getSpecificEnigma(int engimaId) {
-		
-	}
-	
-	public Player createNewAccount(String pseudo, String password) {
-		String crypto = "Mon appli est trop cool";
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_ACOUNT_CREATION);
-		Player player = null;
-		try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
-			player = new Player(json);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return player;
-	}
-	
-	public Player connexion(String pseudo, String password) {
-		String crypto = "Mon appli est trop cool";
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_AUTHENTICATION);
-		Player player = new Player();
-		/*try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
-			if(json != null) {
-				player = new Player(json);
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+	/**
+	 * Try to log user on server
+	 * @param pseudo username of user
+	 * @param password password of user
+	 * @return Player
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 * @throws JSONException
+	 */
+	public Player loginOnServer(String pseudo, String password) 
+			throws InterruptedException, ExecutionException, JSONException {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_AUTHENTICATION);
+		async.execute(pseudo, password);
+		JSONObject object = async.get();
+		Player player = new Player(object);
 		this.player = player;
 		return player;
 	}
+	
+	public void getAllEnigmasPositions() throws InterruptedException, ExecutionException, JSONException {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_GET_ALL_POSITIONS);
+		async.execute();
+		JSONObject object = async.get();
+		JSONArray array = object.getJSONArray("quetes");
+		for (int i = 0; i < array.length(); i++) {
+			positions.add(new QuestInformation(array.getJSONObject(i)));
+		}
+	}
+	
+	public Player createNewAccount(String pseudo, String password) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_ACOUNT_CREATION);
+		async.execute(pseudo, password);
+		
+		return player;
+	}
+	
+	
 
 	public Player getPlayerInformations(int i) {
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_GET_PLAYER_STATS);
-		Player player = null;
-		/*try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
-			if(json != null) {
-				player = new Player(json);
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		
 		
 		return new Player();
 	}
@@ -148,15 +94,14 @@ public class EnigmaApplication extends Application {
 		return this.player;
 	}
 
-	public Question getEngimaById(int id) {
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_GET_ENIGMA);
-		Question enigma = new Question(new Position(1, 123, 125), 4, "Quel est l'animal ?", "Le serpent", "Le serpent", "Une tartine", "Jackie", "Michel");
-		/*try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
+	public Quetes getEngimaById(int id) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_GET_ENIGMA);
+		async.execute(String.valueOf(id));
+		Question enigma = null;
+		try {
+			JSONObject json = async.get();
 			if(json != null) {
-				player = new Player(json);
+				enigma = new Question(json);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -164,22 +109,34 @@ public class EnigmaApplication extends Application {
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		} 
 		
 		return enigma;
 	}
 
 	public void answerTheQuestion(String answer, int enigmaId) {
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_POST_ENIGMA_RESPONSE);
-		/*try {
-			String jsonResponse = async.get();
-			JSONObject json = new JSONObject(jsonResponse);
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_ENIGMA_RESPONSE);
+		async.execute(String.valueOf(enigmaId), player.getName(), answer);
+		
+	}
+
+	public void answerTheBattle(String answer, int enigmaId, boolean time, int opponentId) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_BATTLE_RESPONSE);
+		async.execute();
+	}
+
+	public List<QuestInformation> getPositions() {
+		return positions;
+	}
+
+	public Combat getBattle(String name) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_GET_BATTLE);
+		async.execute(name);
+		Combat enigma = null;
+		try {
+			JSONObject json = async.get();
 			if(json != null) {
-				player = new Player(json);
+				enigma = new Combat(json);
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -187,17 +144,15 @@ public class EnigmaApplication extends Application {
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+		} 
 		
-		
+		return enigma;
 	}
 
-	public void answerTheBattle(String answer, int enigmaId, boolean time, int opponentId) {
-		RequestRESTAsync async = new RequestRESTAsync();
-		async.execute(EnigmasConstants.REST_POST_BATTLE_RESPONSE);
+	public void sendPositionToServer(Location position) {
+		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_POS_PLAYER);
+		async.execute(String.valueOf(position.getLatitude()), String.valueOf(position.getLongitude()));
+		
 	}
 	
 }

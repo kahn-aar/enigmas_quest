@@ -5,35 +5,26 @@ import org.json.JSONObject;
 
 public class Player {
 
-	private int id;
 	private String name;
 	private int points;
 	private int questionAnswered;
 	private int questionAsked;
 	
 	public Player(JSONObject jsonObject) throws JSONException {
-		this.id = jsonObject.getInt("id");
-		this.name = jsonObject.getString("name");
-		this.points = 0;
+		this.name = jsonObject.getString("login");
+		this.points = jsonObject.getInt("points");
 		this.questionAnswered = 0;
 		this.questionAsked = 0;
 	}
 	
-	
 	public Player() {
-		id = 1;
 		name = "nicoco";
 		points = 5;
 		questionAnswered = 10;
 	}
 
 
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getName() {
 		return name;
 	}

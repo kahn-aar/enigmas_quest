@@ -21,6 +21,9 @@ public abstract class Quetes {
 		this.numero = numero;
 	}
 
+	public Quetes() {
+	}
+
 	public Position getPosition() {
 		return position;
 	}

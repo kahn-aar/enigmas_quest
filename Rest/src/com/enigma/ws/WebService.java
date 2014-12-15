@@ -49,8 +49,11 @@ public class WebService {
 	@Path("register")
 	public void register(@QueryParam("login") String login, @QueryParam("password") String password) {
 		try {
+			System.out.println("bonjour du register");
 			Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+			System.out.println(p);
 			if(p == null) {
+				System.out.println("bonjour du register");
 				Player newPlayer = new Player(login, password, 0, 0, null);
 				launcher.rp.addPlayer(Controleur.getConn(), newPlayer);
 			}
@@ -120,6 +123,13 @@ public class WebService {
 			}
 		}
 		return new Statistique((float)nbJuste/(float)liste.size()*100);
+	}
+	
+	@POST
+	@Path("quest")
+	@Produces({"application/xml", "application/json"})
+	public void answerQuest(@QueryParam("num") int id, @QueryParam("login") String login, @QueryParam("answer") String Answer) {
+		System.out.println("Appel de la membrane");
 	}
 	
 }
