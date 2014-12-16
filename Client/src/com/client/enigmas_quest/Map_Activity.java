@@ -64,7 +64,6 @@ public class Map_Activity extends ActionBarActivity implements
 		dataList.add(new DrawerItem("Game"));
 		dataList.add(new DrawerItem("Map", R.drawable.ic_action_gamepad));
 		dataList.add(new DrawerItem("Stats", R.drawable.ic_action_about));
-		dataList.add(new DrawerItem("Photo", R.drawable.ic_action_camera));
 		dataList.add(new DrawerItem("Parameter"));
 		dataList.add(new DrawerItem("Parameters", R.drawable.ic_action_settings));
 
@@ -146,29 +145,17 @@ public class Map_Activity extends ActionBarActivity implements
 			args.putInt(StatsPageFragment.NB_ENIGMES, application.getPlayer()
 					.getQuestionAnswered());
 			break;
-		case 3:
-			Intent intent = new Intent(Map_Activity.this, BattleActivity.class);
-			intent.putExtra(EnigmasConstants.ENIGMA_ID, 4);
-			intent.putExtra(EnigmasConstants.OPPONENT_ID, 4);
-			intent.putExtra(EnigmasConstants.OPPONENT_NAME, "Miam");
-			startActivity(intent);
-			break;
-		case 5:
+		case 4:
 			fragment = new ParametersPageFragment();
 			break;
 		default:
 			break;
 		}
 
-		// *******************************************************************
-		// Ajout du If pour lancer l'Activité Photo
-
-		if (number == 1 || number == 2 || number == 5) {
-			fragment.setArguments(args);
-			FragmentManager frgManager = getSupportFragmentManager();
-			frgManager.beginTransaction().replace(R.id.container, fragment)
-					.commit();
-		}
+		fragment.setArguments(args);
+		FragmentManager frgManager = getSupportFragmentManager();
+		frgManager.beginTransaction().replace(R.id.container, fragment)
+				.commit();
 
 		// **************************************************************
 

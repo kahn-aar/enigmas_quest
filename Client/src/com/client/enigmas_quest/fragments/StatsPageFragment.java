@@ -36,11 +36,11 @@ public class StatsPageFragment extends Fragment {
           score = (TextView) view.findViewById(R.id.score_stats);
           enigmes = (TextView) view.findViewById(R.id.questions_asked_stats);
           
-          Player player = application.getPlayerInformations(0);
+          Player player = application.getPlayerInformations();
 
           monNom.setText(getArguments().getString(PLAYER_NAME));
-          score.setText(String.valueOf(getArguments().getInt(SCORE)));
-          enigmes.setText(String.valueOf(getArguments().getInt(NB_ENIGMES)));
+          score.setText(String.valueOf(player.getPoints()));
+          enigmes.setText(String.valueOf(player.getQuestionAnswered()));
           return view;
     }
 }

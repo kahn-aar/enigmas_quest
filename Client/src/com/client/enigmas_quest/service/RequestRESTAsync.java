@@ -30,7 +30,7 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	
 	private HttpClient httpclient = new DefaultHttpClient();
 	
-	private final String baseUrl = "http://192.168.0.107:8080/EnigmaRest/rest/enigma";
+	private final String baseUrl = "http://10.238.50.66:8080/EnigmaRest/rest/enigma";
 	
 	private int requestType;
 	

@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.android.gms.internal.bu;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -50,6 +52,16 @@ public class PhotoActivity extends Activity {
 				open();
 			}
 		});
+		
+		Button buttonClose = (Button) findViewById(R.id.buttonPhotoClose);
+		buttonClose.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				close();
+			}
+
+			
+		});
 	}
 
 	@Override
@@ -71,6 +83,10 @@ public class PhotoActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void close() {
+		this.finish();
+	}
+	
 	public void open() {
 		Intent intent = new Intent(
 				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);

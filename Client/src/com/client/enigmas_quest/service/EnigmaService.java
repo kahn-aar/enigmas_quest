@@ -9,8 +9,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import com.client.enigmas_quest.BattleActivity;
+import com.client.enigmas_quest.CreateAccountActivity;
 import com.client.enigmas_quest.EnigmaApplication;
 import com.client.enigmas_quest.GPSTracker;
+import com.client.enigmas_quest.LoginActivity;
+import com.client.enigmas_quest.Map_Activity;
 import com.client.enigmas_quest.mappage.Combat;
 
 public class EnigmaService extends IntentService {
@@ -22,7 +26,7 @@ public class EnigmaService extends IntentService {
 	}
 
 	// intervalle entre les maj = 5 secondes
-	static final int DELAY = 5000;
+	static final int DELAY = 60000;
 
 	GPSTracker gpsTraker;
 
@@ -57,7 +61,8 @@ public class EnigmaService extends IntentService {
 			Combat battle = application
 					.getBattle(application.getPlayer().getName());
 			if (battle != null && !runFlag) {
-				// Do the battle
+				/*Intent intent = new Intent(Map_Activity.this, BattleActivity.class);
+                startActivity(intent);*/
 
 			}
 	 }
@@ -73,9 +78,9 @@ public class EnigmaService extends IntentService {
 	public void onCreate() {
 		System.out.println("created service");
 		application = (EnigmaApplication) getApplication();
-		locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, onLocationChange);
-		locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, onLocationChange);
+		//locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		//locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, onLocationChange);
+		//locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, onLocationChange);
 		super.onCreate();
 	}
 

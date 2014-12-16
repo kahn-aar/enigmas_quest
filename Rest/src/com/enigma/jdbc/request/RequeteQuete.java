@@ -66,10 +66,11 @@ public class RequeteQuete {
 		ArrayList<Quetes> result = new ArrayList<Quetes>();
 		RequeteQuestion rq = new RequeteQuestion();
 		RequeteCombat rc = new RequeteCombat();
-		//RequetePhoto rp = new RequetePhoto();
+		RequetePhoto rp = new RequetePhoto();
 		//RequeteVideo rv = new RequeteVideo();
 		result.addAll(rc.getAllCombat(conn));
 		result.addAll(rq.getAllQuestion(conn));
+		result.addAll(rp.getAllPhoto(conn));
 		
 		return result;
 	}

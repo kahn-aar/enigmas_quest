@@ -124,6 +124,8 @@ public class WebService {
 	@Produces({"application/xml", "application/json"})
 	public ArrayList<Player> getAllPlayer() throws SQLException{
 		ArrayList<Player> allPlayer = launcher.rp.allPlayers(Controleur.getConn());
+		
+		
 		return allPlayer;
 	}
 	

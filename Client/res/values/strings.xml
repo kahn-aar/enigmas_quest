@@ -22,6 +22,7 @@
     <string name="textViewPhoto">Ouhhaa, il est temps de faire une petite photo.</string>
     <string name="photoDescription">Photo de la partie</string>
     <string name="buttonPhoto">Prendre la photo</string>
+    <string name="buttonPhotoClose">Envoyer la photo</string>
     
     <string name="error_account_email">Entrez un pseudo valide</string>
     <string name="error_account_password">Entrer un mot de passe</string>
