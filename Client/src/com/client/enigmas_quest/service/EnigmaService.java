@@ -12,62 +12,57 @@ import com.client.enigmas_quest.mappage.Combat;
 public class EnigmaService extends IntentService {
 
 	EnigmaApplication application;
-	
+
 	public EnigmaService() {
 		super("Enigma service");
 		application = (EnigmaApplication) getApplication();
 		gpsTraker = new GPSTracker(getApplicationContext());
 	}
 
-    // intervalle entre les maj = 5 secondes 
-    static final int DELAY = 5000; 
+	// intervalle entre les maj = 5 secondes
+	static final int DELAY = 5000;
 
-    GPSTracker gpsTraker;
-    
-    // est-ce que le service 
-    //  est en train de s’exécuter ?
-    private boolean runFlag = false; 
+	GPSTracker gpsTraker;
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+	// est-ce que le service
+	// est en train de s’exécuter ?
+	private boolean runFlag = false;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
+	@Override
+	public IBinder onBind(Intent intent) {
+		return null;
+	}
 
-    @Override
-    public int onStartCommand(Intent intent, 
-                                int flags, 
-                                int startId) {
-        super.onStartCommand(intent, flags, startId);
+	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
 
-        // Send position
-        
-        Location position = gpsTraker.getLocation();
-        application.sendPositionToServer(position);
-        
-        Combat battle = application.getBattle(application.getPlayer().getName());
-        if (battle != null && ! runFlag) {
-        	//Do the battle
-        	
-        }
-        return START_STICKY;
-    }
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		super.onStartCommand(intent, flags, startId);
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+		// Send position
 
-        // arrêter et détruire le fil de MAJ 
-        // à la destruction du service 
-        // mettre updater à null pour le GC
-    }
+		Location position = gpsTraker.getLocation();
+		application.sendPositionToServer(position);
+		System.out.println(position);
+		Combat battle = application
+				.getBattle(application.getPlayer().getName());
+		if (battle != null && !runFlag) {
+			// Do the battle
+
+		}
+		return START_STICKY;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+
 	@Override
 	protected void onHandleIntent(Intent intent) {
 	}
-
 
 }
