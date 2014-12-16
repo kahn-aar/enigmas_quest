@@ -161,7 +161,7 @@ public class RequetePlayer {
 		rp.addPosition(conn, position.getLongitude(), position.getLatitude());
 		
 		//get position's id
-		int positionId = rp.getIdByCoor(conn, position.getLongitude(), position.getLatitude());
+		int positionId = rp.getLastId(conn);
 		
 		//update player
 		PreparedStatement st = conn.prepareStatement("UPDATE player SET positionId = ? WHERE login = ? ");
