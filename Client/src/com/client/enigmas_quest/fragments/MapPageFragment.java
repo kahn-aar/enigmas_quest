@@ -75,30 +75,8 @@ public class MapPageFragment extends SupportMapFragment implements
 		}
 		mapView.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 				45.3788, -71.9291), 15));
-		
-		mapView.setOnMarkerClickListener(new OnMarkerClickListener() {
-			
-			@Override
-			public boolean onMarkerClick(Marker marker) {
-				Toast.makeText(getActivity().getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
-				Quetes enigme = application.getEngimaById(Integer.valueOf(marker.getTitle()));
-				if (enigme instanceof Question) {
-					Intent intent = new Intent(getActivity(), EnigmaActivity.class);
-					intent.putExtra(EnigmasConstants.ENIGMA_ID, Integer.valueOf(marker.getTitle()));
-					startActivity(intent);
-				} else if (enigme instanceof Photo) {
-					Intent intent = new Intent(getActivity(), PhotoActivity.class);
-					intent.putExtra(EnigmasConstants.ENIGMA_ID, Integer.valueOf(marker.getTitle()));
-					startActivity(intent);
-				} else {
-					System.out.println("echec");
-				}
-				return false;
-			}
-		});
-		
-	}
 
+	}
 
 	private double distance(double lat1, double lon1, double lat2, double lon2,
 			char unit) {
@@ -117,39 +95,41 @@ public class MapPageFragment extends SupportMapFragment implements
 		return (dist);
 
 	}
-	
+
 	private double rad2deg(double rad) {
-	
-		  return (rad * 180 / Math.PI);
-		}
 
-	
+		return (rad * 180 / Math.PI);
+	}
+
 	private double deg2rad(double deg) {
-		  return (deg * Math.PI / 180.0);
-		}
-
+		return (deg * Math.PI / 180.0);
+	}
 
 	@Override
 	public boolean onMarkerClick(Marker marker) {
 		int i = Integer.parseInt(marker.getTitle());
-		Question enigme = (Question) application.getEngimaById(i);
+		Object enigme = (Question) application.getEngimaById(i);
 		double distance = distance(marker.getPosition().latitude,
-				marker.getPosition().longitude,
-				gpsTraker.getLatitude(), gpsTraker.getLongitude(), 'K');
+				marker.getPosition().longitude, gpsTraker.getLatitude(),
+				gpsTraker.getLongitude(), 'K');
+		if (distance < 15) {
+			if (enigme instanceof Question) {
+				Intent intent = new Intent(getActivity(), EnigmaActivity.class);
+				intent.putExtra(EnigmasConstants.ENIGMA_ID, i);
+				startActivity(intent);
+			} else if (enigme instanceof Photo) {
+				Intent intent = new Intent(getActivity(), PhotoActivity.class);
+				intent.putExtra(EnigmasConstants.ENIGMA_ID, i);
+				startActivity(intent);
+			} else {
+				System.out.println("echec");
+			}
+		} else {
+			Toast.makeText(getActivity().getApplicationContext(),
+					"Vous êtes trop loin (" + i + "m)", Toast.LENGTH_LONG)
+					.show();
+		}
 
-		
-		  if (enigme instanceof Question) { Intent intent = new
-		  Intent(getActivity(), EnigmaActivity.class);
-		  intent.putExtra(EnigmasConstants.ENIGMA_ID, i);
-		  startActivity(intent);
-		  
-		 /*} else if (enigme instanceof Photo) { Intent intent = new
-		  Intent(getActivity(), PhotoActivity.class);
-		  intent.putExtra(EnigmasConstants.ENIGMA_ID,
-		  Integer.valueOf(marker.getTitle())); startActivity(intent);
-		  */
-		  } else { System.out.println("echec"); }
-		 
 		return false;
 	}
 

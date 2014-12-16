@@ -17,6 +17,7 @@ import com.client.enigmas_quest.data.Enigma;
 import com.client.enigmas_quest.data.Player;
 import com.client.enigmas_quest.data.QuestInformation;
 import com.client.enigmas_quest.mappage.Combat;
+import com.client.enigmas_quest.mappage.Photo;
 import com.client.enigmas_quest.mappage.Position;
 import com.client.enigmas_quest.mappage.Question;
 import com.client.enigmas_quest.mappage.Quetes;
@@ -97,16 +98,33 @@ public class EnigmaApplication extends Application {
 	public Quetes getEngimaById(int id) {
 		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_GET_ENIGMA);
 		async.execute(String.valueOf(id));
-		Question enigma = null;
+		Quetes enigma = null;
 		try {
 			JSONObject json = async.get();
 			if(json != null) {
-				enigma = new Question(json);
+				int num = json.getInt("numero");
+				if(num < 50) {
+					enigma = new Question(json);
+				}
+				else if(num < 100) {
+					Position position = new Position(json.getJSONObject("position"));
+					int numero = json.getInt("numero");
+					String theme = json.getString("theme");
+					String url = json.getString("url");
+					enigma = new Photo(position, numero, theme, url);
+				}
+				else {
+					//COMBAT
+					
+				}
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

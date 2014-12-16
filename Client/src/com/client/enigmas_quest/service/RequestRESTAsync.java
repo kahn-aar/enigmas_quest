@@ -30,7 +30,7 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	
 	private HttpClient httpclient = new DefaultHttpClient();
 	
-	private final String baseUrl = "http://10.238.50.213:8080/EnigmaRest/rest/enigma";
+	private final String baseUrl = "http://192.168.0.107:8080/EnigmaRest/rest/enigma";
 	
 	private int requestType;
 	
@@ -51,7 +51,6 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 					hm.put("password", arg0[1]);
 					url = addParametersToUrl(this.baseUrl+"/login", hm);
 					System.out.println(url);
-
 					object = responseTOJSON(executeRequestGet(url));
 				}
 				break;
@@ -149,9 +148,9 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 		HttpResponse response;
 		try {
 	        response = httpclient.execute(httpget);
-	        
 	        return response;
 	    } catch (Exception e) {
+	    	System.out.println("LLLLAAA"+e.getMessage());
 	    	return null;
 	    }
 	}
@@ -171,18 +170,19 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	}
 	
 	private JSONObject responseTOJSON(HttpResponse response) {
-		
+			
 			BufferedReader reader = null;
 			try {
 				reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+				System.out.println("LALLLLA");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
+				System.out.println("ICI");
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				System.out.println("ICI2");
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.out.println("ICI3");
 				e.printStackTrace();
 			}
 			StringBuilder builder = new StringBuilder();
