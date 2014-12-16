@@ -80,5 +80,22 @@ public class RequetePosition {
 		return positionId;
 	}
 	
+	/**
+	 * 
+	 * @param conn
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getLastId(Connection conn) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("SELECT MAX(id) as id FROM positions");
+		int positionId;
+		ResultSet rs = st.executeQuery();
+		if (rs.next()) {
+			positionId = rs.getInt("id");
+		}else{
+			positionId = 0;
+		}
+		return positionId;
+	}
 	
 }
