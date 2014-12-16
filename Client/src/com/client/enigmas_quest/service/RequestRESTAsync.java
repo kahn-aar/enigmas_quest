@@ -126,11 +126,28 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 				}
 				break;
 			case EnigmasConstants.REST_POST_POS_PLAYER:
-				hm.put("latitude", arg0[0]);
-				hm.put("longitude", arg0[1]);
-				
-				url = addParametersToUrl(this.baseUrl+"/pos", hm);
-				object = responseTOJSON(executeRequestGet(url));
+				if(arg0.length == 3) {
+					HttpClient httpClient = new DefaultHttpClient();
+		            HttpPost post = new HttpPost(this.baseUrl + "/pos");
+		            post.setHeader("content-type", "application/json");
+
+		            //Construimos el objeto cliente en formato JSON
+		            JSONObject dato = new JSONObject();
+
+		            try {
+		            	dato.put("login", arg0[0]);
+		            	dato.put("lat", arg0[1]);
+		            	dato.put("longitude", arg0[2]);
+
+		                StringEntity entity = new StringEntity(dato.toString());
+		                post.setEntity(entity);
+
+		                httpClient.execute(post);
+		            } catch (Exception e) {
+		            	
+		            }
+		            
+				}
 				break;
 		}
 		return object;
