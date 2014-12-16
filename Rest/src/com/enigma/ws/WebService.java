@@ -182,13 +182,13 @@ public class WebService {
 	 * @throws SQLException 
 	 */
 	@POST
-	@Path("quest")
+	@Path("answer")
 	@Consumes("application/json")
 	public void answerQuest(String answerJSON) throws SQLException {
 		JSONObject json = new JSONObject(answerJSON);
 		System.out.println("bite : " + answerJSON);
 		if(json != null) {
-			int id = json.getInt("id");
+			int id = json.getInt("num");
 			String login = json.getString("login");
 			String answer = json.getString("answer");
 			boolean vraiFaux = json.getBoolean("vraiFaux");
