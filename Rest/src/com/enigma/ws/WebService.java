@@ -21,7 +21,6 @@ import com.enigma.jdbc.mapping.QuestionReponse;
 import com.enigma.jdbc.mapping.Quetes;
 import com.enigma.jdbc.mapping.Reponse;
 import com.enigma.jdbc.mapping.Statistique;
-import com.sun.j3d.internal.Distance;
 
 
 /**
