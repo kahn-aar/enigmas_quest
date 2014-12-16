@@ -186,7 +186,6 @@ public class WebService {
 	@Consumes("application/json")
 	public void answerQuest(String answerJSON) throws SQLException {
 		JSONObject json = new JSONObject(answerJSON);
-		System.out.println("bite : " + answerJSON);
 		if(json != null) {
 			int id = json.getInt("num");
 			String login = json.getString("login");
@@ -214,7 +213,6 @@ public class WebService {
 	public void givePosition(String answerJSON) {
 		try {
 			JSONObject json = new JSONObject(answerJSON);
-			System.out.println("bite : " + answerJSON);
 			if(json != null) {
 				String login = json.getString("login");
 				float lat = (float) json.getDouble("lat");
