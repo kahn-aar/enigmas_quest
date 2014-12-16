@@ -186,7 +186,6 @@ public class WebService {
 	@Consumes("application/json")
 	public void answerQuest(String answerJSON) throws SQLException {
 		JSONObject json = new JSONObject(answerJSON);
-		System.out.println("bite : " + answerJSON);
 		if(json != null) {
 			int id = json.getInt("num");
 			String login = json.getString("login");
@@ -210,12 +209,18 @@ public class WebService {
 	 */
 	@POST
 	@Path("pos")
-	@Produces({"application/xml", "application/json"})
-	public void givePosition(@QueryParam("login") String login, @QueryParam("latitude") float lat, @QueryParam("longitude") float longitude) {
+	@Consumes("application/json")
+	public void givePosition(String answerJSON) {
 		try {
-			Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
-			launcher.rp.changePosition(Controleur.getConn(), p, new Position(lat, longitude));
-		} catch (SQLException e) {
+			JSONObject json = new JSONObject(answerJSON);
+			if(json != null) {
+				String login = json.getString("login");
+				float lat = (float) json.getDouble("lat");
+				float longitude = (float) json.getDouble("longitude");
+				Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+				launcher.rp.changePosition(Controleur.getConn(), p, new Position(lat, longitude));
+			}
+		}catch (SQLException e) {
 		}
 	}
 	

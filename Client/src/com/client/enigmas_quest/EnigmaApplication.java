@@ -169,7 +169,7 @@ public class EnigmaApplication extends Application {
 
 	public void sendPositionToServer(Location position) {
 		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_POS_PLAYER);
-		async.execute(String.valueOf(position.getLatitude()), String.valueOf(position.getLongitude()));
+		async.execute(player.getName(), String.valueOf(position.getLatitude()), String.valueOf(position.getLongitude()));
 		
 	}
 	
