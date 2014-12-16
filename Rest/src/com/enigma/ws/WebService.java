@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 
 import com.enigma.jdbc.loader.Controleur;
 import com.enigma.jdbc.loader.LauncherRequest;
+import com.enigma.jdbc.mapping.Combat;
 import com.enigma.jdbc.mapping.Photo;
 import com.enigma.jdbc.mapping.Player;
 import com.enigma.jdbc.mapping.Question;
@@ -20,6 +21,8 @@ import com.enigma.jdbc.mapping.QuestionReponse;
 import com.enigma.jdbc.mapping.Quetes;
 import com.enigma.jdbc.mapping.Reponse;
 import com.enigma.jdbc.mapping.Statistique;
+import com.sun.j3d.internal.Distance;
+
 
 /**
  * 
@@ -33,6 +36,12 @@ public class WebService {
 	
 	private LauncherRequest launcher = new LauncherRequest();
 	
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @return
+	 */
 	@GET
 	@Path("login")
 	@Produces({"application/xml", "application/json"})
@@ -45,6 +54,11 @@ public class WebService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 */
 	@POST
 	@Path("register")
 	public void register(@QueryParam("login") String login, @QueryParam("password") String password) {
@@ -62,6 +76,10 @@ public class WebService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	@GET
 	@Path("allQuest")
 	@Produces({"application/xml", "application/json"})
@@ -74,6 +92,11 @@ public class WebService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
 	@GET
 	@Path("quest")
 	@Produces({"application/xml", "application/json"})
@@ -86,6 +109,11 @@ public class WebService {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
 	@GET
 	@Path("player")
 	@Produces({"application/xml", "application/json"})
@@ -94,7 +122,11 @@ public class WebService {
 		return allPlayer;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
 	@GET
 	@Path("photos")
 	@Produces({"application/xml", "application/json"})
@@ -103,6 +135,12 @@ public class WebService {
 	    return allPhoto;
 	}
 	
+	/**
+	 * 
+	 * @param login
+	 * @return
+	 * @throws SQLException
+	 */
 	@GET
 	@Path("details")
 	@Produces({"application/xml", "application/json"})
@@ -111,6 +149,12 @@ public class WebService {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param login
+	 * @return
+	 * @throws SQLException
+	 */
 	@GET
 	@Path("stat")
 	@Produces({"application/xml", "application/json"})
@@ -125,11 +169,53 @@ public class WebService {
 		return new Statistique((float)nbJuste/(float)liste.size()*100);
 	}
 	
+	/**
+	 * 
+	 * @param id
+	 * @param login
+	 * @param Answer
+	 */
 	@POST
 	@Path("quest")
 	@Produces({"application/xml", "application/json"})
 	public void answerQuest(@QueryParam("num") int id, @QueryParam("login") String login, @QueryParam("answer") String Answer) {
 		System.out.println("Appel de la membrane");
+	}
+	
+	/**
+	 * recuperer le joueur le plus proche de celui la. Si il est proche de 5m ou moins, on renvoie un combat (2 joueurs et quetes choisi au hasard) sinon null.
+	 * @param login
+	 * @return
+	 * @throws SQLException 
+	 */
+	@GET
+	@Path("battle")
+	@Produces({"application/xml", "application/json"})
+	public Combat getBattle(@QueryParam("login") String login) throws SQLException{
+		ArrayList<Player> listeJoueur = launcher.rp.allPlayers(Controleur.getConn());
+		Player joueur1, joueur2;
+		joueur2 = null;
+		double distante = 1000000000;
+		double pizza;
+		joueur1 = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+		Combat result = null;
+		
+		for(int i=0; i<listeJoueur.size(); i++){
+			if(joueur1.getLogin() != listeJoueur.get(i).getLogin()){
+				pizza = Tools.distance((double)joueur1.getPosition().getLatitude(), (double)joueur1.getPosition().getLongitude(), (double)listeJoueur.get(i).getPosition().getLatitude(), (double)listeJoueur.get(i).getPosition().getLongitude(), 'K');
+				if (distante > pizza){
+					joueur2 = listeJoueur.get(i);
+					distante = pizza;
+				}
+			}
+		}
+		
+		if(distante <= 5 && joueur2 != null){
+			Question question = launcher.rq.getAllQuestion(Controleur.getConn()).get(1);
+			result = new Combat(joueur1.getPosition(), 1, joueur1, joueur2, question);
+		}
+		
+		return result;
 	}
 	
 }
