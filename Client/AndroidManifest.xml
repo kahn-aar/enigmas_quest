@@ -76,6 +76,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.client.enigmas_quest.Map_Activity" />
         </activity>
+        <service android:name="com.client.enigmas_quest.service.EnigmaService"/>
         <meta-data
 		    android:name="com.google.android.gms.version"
 		    android:value="@integer/google_play_services_version" />

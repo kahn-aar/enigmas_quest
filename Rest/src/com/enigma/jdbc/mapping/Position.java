@@ -30,6 +30,11 @@ public class Position {
 		this.latitude = latitude;
 	}
 	
+	public Position(float lat, float longitude2) {
+		this.longitude = longitude2;
+		this.latitude = lat;
+	}
+
 	public int getId() {
 		return id;
 	}

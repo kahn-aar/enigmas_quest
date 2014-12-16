@@ -31,6 +31,7 @@ import com.client.enigmas_quest.data.QuestType;
 import com.client.enigmas_quest.fragments.MapPageFragment;
 import com.client.enigmas_quest.fragments.ParametersPageFragment;
 import com.client.enigmas_quest.fragments.StatsPageFragment;
+import com.client.enigmas_quest.service.EnigmaService;
 
 /**
  * Base activity, containing the fragments
@@ -105,6 +106,7 @@ public class Map_Activity extends ActionBarActivity implements
 
 		if (savedInstanceState == null) {
 			onSelectItem(1);
+			startService(new Intent(Map_Activity.this, EnigmaService.class));
 		}
 
 	}

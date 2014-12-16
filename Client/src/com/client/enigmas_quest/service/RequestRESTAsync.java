@@ -30,7 +30,7 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	
 	private HttpClient httpclient = new DefaultHttpClient();
 	
-	private final String baseUrl = "http://10.232.51.175:8080/EnigmaRest/rest/enigma";
+	private final String baseUrl = "http://192.168.0.107:8080/EnigmaRest/rest/enigma";
 	
 	private int requestType;
 	
@@ -51,7 +51,6 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 					hm.put("password", arg0[1]);
 					url = addParametersToUrl(this.baseUrl+"/login", hm);
 					System.out.println(url);
-
 					object = responseTOJSON(executeRequestGet(url));
 				}
 				break;
@@ -101,19 +100,53 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 				object = responseTOJSON(executeRequestGet(url));
 				break;
 			case EnigmasConstants.REST_POST_ENIGMA_RESPONSE:
-				hm.put("num", arg0[0]);
-				hm.put("login", arg0[1]);
-				hm.put("answer", arg0[2]);
-				
-				url = addParametersToUrl(this.baseUrl+"/quest", hm);
-				object = responseTOJSON(executeRequestGet(url));
+				if(arg0.length == 4) {
+					HttpClient httpClient = new DefaultHttpClient();
+		            HttpPost post = new HttpPost(this.baseUrl + "/answer");
+		            post.setHeader("content-type", "application/json");
+
+		            //Construimos el objeto cliente en formato JSON
+		            JSONObject dato = new JSONObject();
+
+		            try {
+		            	dato.put("num", arg0[0]);
+		            	dato.put("login", arg0[1]);
+		            	dato.put("answer", arg0[2]);
+		            	dato.put("vraiFaux", arg0[3]);
+
+		                StringEntity entity = new StringEntity(dato.toString());
+		                post.setEntity(entity);
+
+		                httpClient.execute(post);
+		            } catch (Exception e) {
+		            	
+		            }
+		            
+				}
 				break;
 			case EnigmasConstants.REST_POST_POS_PLAYER:
-				hm.put("latitude", arg0[0]);
-				hm.put("longitude", arg0[1]);
-				
-				url = addParametersToUrl(this.baseUrl+"/pos", hm);
-				object = responseTOJSON(executeRequestGet(url));
+				if(arg0.length == 3) {
+					HttpClient httpClient = new DefaultHttpClient();
+		            HttpPost post = new HttpPost(this.baseUrl + "/pos");
+		            post.setHeader("content-type", "application/json");
+
+		            //Construimos el objeto cliente en formato JSON
+		            JSONObject dato = new JSONObject();
+
+		            try {
+		            	dato.put("login", arg0[0]);
+		            	dato.put("lat", arg0[1]);
+		            	dato.put("longitude", arg0[2]);
+
+		                StringEntity entity = new StringEntity(dato.toString());
+		                post.setEntity(entity);
+
+		                httpClient.execute(post);
+		            } catch (Exception e) {
+		            	
+		            }
+		            
+				}
 				break;
 		}
 		return object;
@@ -132,9 +165,9 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 		HttpResponse response;
 		try {
 	        response = httpclient.execute(httpget);
-	        
 	        return response;
 	    } catch (Exception e) {
+	    	System.out.println("LLLLAAA"+e.getMessage());
 	    	return null;
 	    }
 	}
@@ -154,18 +187,19 @@ public class RequestRESTAsync extends AsyncTask<String, Void, JSONObject> {
 	}
 	
 	private JSONObject responseTOJSON(HttpResponse response) {
-		
+			
 			BufferedReader reader = null;
 			try {
 				reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+				System.out.println("LALLLLA");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
+				System.out.println("ICI");
 				e.printStackTrace();
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
+				System.out.println("ICI2");
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.out.println("ICI3");
 				e.printStackTrace();
 			}
 			StringBuilder builder = new StringBuilder();

@@ -4,14 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.enigma.jdbc.request.RequeteCombat;
-import com.enigma.jdbc.request.RequetePhoto;
-import com.enigma.jdbc.request.RequetePlayer;
-import com.enigma.jdbc.request.RequetePosition;
-import com.enigma.jdbc.request.RequeteQuestion;
-import com.enigma.jdbc.request.RequeteQuete;
-import com.enigma.jdbc.request.RequeteVideo;
-
 /**
  * Classe controleur singleton
  * @author teamut

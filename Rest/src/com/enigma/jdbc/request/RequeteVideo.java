@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
-import com.enigma.jdbc.mapping.*;
+import com.enigma.jdbc.mapping.Position;
+import com.enigma.jdbc.mapping.Video;
 
 public class RequeteVideo {
 

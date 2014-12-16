@@ -3,25 +3,26 @@ package com.enigma.ws;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.PathParam;
+
+import org.json.JSONObject;
 
 import com.enigma.jdbc.loader.Controleur;
 import com.enigma.jdbc.loader.LauncherRequest;
 import com.enigma.jdbc.mapping.Combat;
 import com.enigma.jdbc.mapping.Photo;
 import com.enigma.jdbc.mapping.Player;
+import com.enigma.jdbc.mapping.Position;
 import com.enigma.jdbc.mapping.Question;
 import com.enigma.jdbc.mapping.QuestionReponse;
 import com.enigma.jdbc.mapping.Quetes;
 import com.enigma.jdbc.mapping.Reponse;
 import com.enigma.jdbc.mapping.Statistique;
-import com.sun.j3d.internal.Distance;
 
 
 /**
@@ -56,21 +57,25 @@ public class WebService {
 	
 	/**
 	 * 
-	 * @param login
+	 * @param newPLayerJson
 	 * @param password
 	 */
 	@POST
+	@Consumes("application/json")
 	@Path("register")
-	public void register(@QueryParam("login") String login, @QueryParam("password") String password) {
+	public void register(String newPLayerJson) {
 		try {
-			System.out.println("bonjour du register");
-			Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
-			System.out.println(p);
-			if(p == null) {
-				System.out.println("bonjour du register");
-				Player newPlayer = new Player(login, password, 0, 0, null);
-				launcher.rp.addPlayer(Controleur.getConn(), newPlayer);
+			JSONObject json = new JSONObject(newPLayerJson);
+			if(json != null) {
+				String login = json.getString("login");
+				String password = json.getString("password");
+				Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+				if(p == null) {
+					Player newPlayer = new Player(login, password, 0, 0, null);
+					launcher.rp.addPlayer(Controleur.getConn(), newPlayer);
+				}
 			}
+			
 		} catch (SQLException e) {
 			
 		}
@@ -174,12 +179,49 @@ public class WebService {
 	 * @param id
 	 * @param login
 	 * @param Answer
+	 * @throws SQLException 
 	 */
 	@POST
-	@Path("quest")
-	@Produces({"application/xml", "application/json"})
-	public void answerQuest(@QueryParam("num") int id, @QueryParam("login") String login, @QueryParam("answer") String Answer) {
-		System.out.println("Appel de la membrane");
+	@Path("answer")
+	@Consumes("application/json")
+	public void answerQuest(String answerJSON) throws SQLException {
+		JSONObject json = new JSONObject(answerJSON);
+		if(json != null) {
+			int id = json.getInt("num");
+			String login = json.getString("login");
+			String answer = json.getString("answer");
+			boolean vraiFaux = json.getBoolean("vraiFaux");
+			
+			Question question = launcher.rq.getQuestionByNum(Controleur.getConn(), id);
+			Player player = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+			
+			QuestionReponse qr = new QuestionReponse(player, question, vraiFaux, answer);
+			launcher.rqr.addQuestionReponse(Controleur.getConn(), qr);
+			
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param login
+	 * @param Answer
+	 */
+	@POST
+	@Path("pos")
+	@Consumes("application/json")
+	public void givePosition(String answerJSON) {
+		try {
+			JSONObject json = new JSONObject(answerJSON);
+			if(json != null) {
+				String login = json.getString("login");
+				float lat = (float) json.getDouble("lat");
+				float longitude = (float) json.getDouble("longitude");
+				Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+				launcher.rp.changePosition(Controleur.getConn(), p, new Position(lat, longitude));
+			}
+		}catch (SQLException e) {
+		}
 	}
 	
 	/**

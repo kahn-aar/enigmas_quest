@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
-import com.enigma.jdbc.mapping.*;
+import com.enigma.jdbc.mapping.Player;
+import com.enigma.jdbc.mapping.Question;
+import com.enigma.jdbc.mapping.QuestionReponse;
 
 /**
  * regroupe tout les appels à la base MySQL concernant la table questionReponse
@@ -109,6 +110,23 @@ public class RequeteQuestionReponse {
 		rs.close();
 		stmt.close();
 		return result;
+	}
+	
+	/**
+	 * Ajoute un qr
+	 * @param conn
+	 * @param qr
+	 * @throws SQLException
+	 */
+	public void addQuestionReponse(Connection conn, QuestionReponse qr) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("INSERT INTO questionReponse(login, numeroQ, vraiOuFaux, reponse) VALUES (?,?,?,?)");
+		// Execute the query
+		st.setString(1, qr.getPlayer().getLogin());
+		st.setInt(2, qr.getQuestion().getNumero());
+		st.setBoolean(3, qr.isVraiOuFaux());
+		st.setString(4, qr.getReponse());
+		st.executeUpdate();
+		
 	}
 	
 }

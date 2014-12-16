@@ -30,8 +30,8 @@ public class AnswerListener implements OnClickListener {
 	
 	@Override
 	public void onClick(View arg0) {
-		this.application.answerTheQuestion(this.answer, this.enigmaId);
 		boolean succes = answer.equals(soluce);
+		this.application.answerTheQuestion(this.answer, this.enigmaId, succes);
 		if (succes) {
 			answerView.setBackground(activity.getResources().getDrawable(R.drawable.answer_position_true));
 		} else {

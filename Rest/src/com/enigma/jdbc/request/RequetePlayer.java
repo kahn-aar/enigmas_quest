@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
-import com.enigma.jdbc.mapping.*;
+import com.enigma.jdbc.mapping.Player;
+import com.enigma.jdbc.mapping.Position;
 
 /**
  * Regroupe tout les appels à la base MySQL concernant les joueurs

@@ -1,10 +1,6 @@
 package com.enigma.jdbc.mapping;
 
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import com.sun.xml.internal.txw2.annotation.XmlAttribute;
-import com.sun.xml.internal.txw2.annotation.XmlElement;
 
 /**
  * Classe du modèle concernant les questions

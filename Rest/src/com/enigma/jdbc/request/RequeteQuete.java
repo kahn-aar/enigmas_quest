@@ -1,14 +1,11 @@
 package com.enigma.jdbc.request;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
-import com.enigma.jdbc.mapping.*;
+import com.enigma.jdbc.mapping.Position;
+import com.enigma.jdbc.mapping.Quetes;
 
 /**
  * regroupe tout les appels à la base MySQL concernant les quetes

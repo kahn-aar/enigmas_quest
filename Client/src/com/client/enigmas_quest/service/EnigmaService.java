@@ -1,8 +1,12 @@
 package com.client.enigmas_quest.service;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import com.client.enigmas_quest.EnigmaApplication;
@@ -15,8 +19,6 @@ public class EnigmaService extends IntentService {
 
 	public EnigmaService() {
 		super("Enigma service");
-		application = (EnigmaApplication) getApplication();
-		gpsTraker = new GPSTracker(getApplicationContext());
 	}
 
 	// intervalle entre les maj = 5 secondes
@@ -32,28 +34,54 @@ public class EnigmaService extends IntentService {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
+	
+	private LocationManager			locationMgr				= null;
+	 private LocationListener		onLocationChange	= new LocationListener()
+	 {
+	 @Override
+	 public void onProviderEnabled(String provider)
+	 {
+	 }
+
+	 @Override
+	 public void onProviderDisabled(String provider)
+	 {
+	 }
+
+	 @Override
+	 public void onLocationChanged(Location location)
+	 {
+		 System.out.println(location);
+			application.sendPositionToServer(location);
+		 
+			Combat battle = application
+					.getBattle(application.getPlayer().getName());
+			if (battle != null && !runFlag) {
+				// Do the battle
+
+			}
+	 }
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+	 };
 
 	@Override
 	public void onCreate() {
+		System.out.println("created service");
+		application = (EnigmaApplication) getApplication();
+		locationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationMgr.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, onLocationChange);
+		locationMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, onLocationChange);
 		super.onCreate();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		super.onStartCommand(intent, flags, startId);
-
-		// Send position
-
-		Location position = gpsTraker.getLocation();
-		application.sendPositionToServer(position);
-		System.out.println(position);
-		Combat battle = application
-				.getBattle(application.getPlayer().getName());
-		if (battle != null && !runFlag) {
-			// Do the battle
-
-		}
-		return START_STICKY;
+		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
