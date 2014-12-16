@@ -16,6 +16,7 @@ import com.enigma.jdbc.loader.LauncherRequest;
 import com.enigma.jdbc.mapping.Combat;
 import com.enigma.jdbc.mapping.Photo;
 import com.enigma.jdbc.mapping.Player;
+import com.enigma.jdbc.mapping.Position;
 import com.enigma.jdbc.mapping.Question;
 import com.enigma.jdbc.mapping.QuestionReponse;
 import com.enigma.jdbc.mapping.Quetes;
@@ -179,6 +180,23 @@ public class WebService {
 	@Produces({"application/xml", "application/json"})
 	public void answerQuest(@QueryParam("num") int id, @QueryParam("login") String login, @QueryParam("answer") String Answer) {
 		System.out.println("Appel de la membrane");
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @param login
+	 * @param Answer
+	 */
+	@POST
+	@Path("position")
+	@Produces({"application/xml", "application/json"})
+	public void givePosition(@QueryParam("login") String login, @QueryParam("latitude") float lat, @QueryParam("longitude") float longitude) {
+		try {
+			Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+			launcher.rp.changePosition(Controleur.getConn(), p, new Position(lat, longitude));
+		} catch (SQLException e) {
+		}
 	}
 	
 	/**
