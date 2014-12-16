@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.client.enigmas_quest.EnigmaActivity;
 import com.client.enigmas_quest.EnigmaApplication;
 import com.client.enigmas_quest.GPSTracker;
+import com.client.enigmas_quest.PhotoActivity;
 import com.client.enigmas_quest.constants.EnigmasConstants;
 import com.client.enigmas_quest.data.QuestInformation;
+import com.client.enigmas_quest.mappage.Photo;
 import com.client.enigmas_quest.mappage.Question;
+import com.client.enigmas_quest.mappage.Quetes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -72,7 +76,26 @@ public class MapPageFragment extends SupportMapFragment implements
 		mapView.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 				45.3788, -71.9291), 15));
 		
-
+		mapView.setOnMarkerClickListener(new OnMarkerClickListener() {
+			
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				Toast.makeText(getActivity().getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+				Quetes enigme = application.getEngimaById(Integer.valueOf(marker.getTitle()));
+				if (enigme instanceof Question) {
+					Intent intent = new Intent(getActivity(), EnigmaActivity.class);
+					intent.putExtra(EnigmasConstants.ENIGMA_ID, Integer.valueOf(marker.getTitle()));
+					startActivity(intent);
+				} else if (enigme instanceof Photo) {
+					Intent intent = new Intent(getActivity(), PhotoActivity.class);
+					intent.putExtra(EnigmasConstants.ENIGMA_ID, Integer.valueOf(marker.getTitle()));
+					startActivity(intent);
+				} else {
+					System.out.println("echec");
+				}
+				return false;
+			}
+		});
 		
 	}
 

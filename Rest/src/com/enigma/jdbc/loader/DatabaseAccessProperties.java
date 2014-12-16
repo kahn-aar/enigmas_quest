@@ -3,7 +3,6 @@ package com.enigma.jdbc.loader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Driver;
 import java.util.Properties;
 
 

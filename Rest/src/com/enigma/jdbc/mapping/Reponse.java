@@ -1,7 +1,6 @@
 package com.enigma.jdbc.mapping;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  * 

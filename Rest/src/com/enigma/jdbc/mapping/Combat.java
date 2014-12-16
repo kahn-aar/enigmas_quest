@@ -16,6 +16,8 @@ public class Combat extends Quetes{
 	private Player player2;
 	private Question question;
 	
+	public Combat(){}
+	
 	/**
 	 * Constructeur
 	 * @param position

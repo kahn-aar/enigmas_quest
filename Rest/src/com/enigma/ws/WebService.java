@@ -3,13 +3,14 @@ package com.enigma.ws;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.PathParam;
+
+import org.json.JSONObject;
 
 import com.enigma.jdbc.loader.Controleur;
 import com.enigma.jdbc.loader.LauncherRequest;
@@ -56,21 +57,25 @@ public class WebService {
 	
 	/**
 	 * 
-	 * @param login
+	 * @param newPLayerJson
 	 * @param password
 	 */
 	@POST
+	@Consumes("application/json")
 	@Path("register")
-	public void register(@QueryParam("login") String login, @QueryParam("password") String password) {
+	public void register(String newPLayerJson) {
 		try {
-			System.out.println("bonjour du register");
-			Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
-			System.out.println(p);
-			if(p == null) {
-				System.out.println("bonjour du register");
-				Player newPlayer = new Player(login, password, 0, 0, null);
-				launcher.rp.addPlayer(Controleur.getConn(), newPlayer);
+			JSONObject json = new JSONObject(newPLayerJson);
+			if(json != null) {
+				String login = json.getString("login");
+				String password = json.getString("password");
+				Player p = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+				if(p == null) {
+					Player newPlayer = new Player(login, password, 0, 0, null);
+					launcher.rp.addPlayer(Controleur.getConn(), newPlayer);
+				}
 			}
+			
 		} catch (SQLException e) {
 			
 		}
@@ -174,12 +179,27 @@ public class WebService {
 	 * @param id
 	 * @param login
 	 * @param Answer
+	 * @throws SQLException 
 	 */
 	@POST
 	@Path("quest")
-	@Produces({"application/xml", "application/json"})
-	public void answerQuest(@QueryParam("num") int id, @QueryParam("login") String login, @QueryParam("answer") String Answer) {
-		System.out.println("Appel de la membrane");
+	@Consumes("application/json")
+	public void answerQuest(String answerJSON) throws SQLException {
+		JSONObject json = new JSONObject(answerJSON);
+		System.out.println("bite : " + answerJSON);
+		if(json != null) {
+			int id = json.getInt("id");
+			String login = json.getString("login");
+			String answer = json.getString("answer");
+			boolean vraiFaux = json.getBoolean("vraiFaux");
+			
+			Question question = launcher.rq.getQuestionByNum(Controleur.getConn(), id);
+			Player player = launcher.rp.getPlayerByLogin(Controleur.getConn(), login);
+			
+			QuestionReponse qr = new QuestionReponse(player, question, vraiFaux, answer);
+			launcher.rqr.addQuestionReponse(Controleur.getConn(), qr);
+			
+		}
 	}
 	
 	/**
@@ -189,7 +209,7 @@ public class WebService {
 	 * @param Answer
 	 */
 	@POST
-	@Path("position")
+	@Path("pos")
 	@Produces({"application/xml", "application/json"})
 	public void givePosition(@QueryParam("login") String login, @QueryParam("latitude") float lat, @QueryParam("longitude") float longitude) {
 		try {

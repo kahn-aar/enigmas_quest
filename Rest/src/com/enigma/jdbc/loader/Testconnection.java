@@ -4,7 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.enigma.jdbc.mapping.Question;
-import com.enigma.jdbc.request.*;
+import com.enigma.jdbc.request.RequeteCombat;
+import com.enigma.jdbc.request.RequetePhoto;
+import com.enigma.jdbc.request.RequetePlayer;
+import com.enigma.jdbc.request.RequetePosition;
+import com.enigma.jdbc.request.RequeteQuestion;
+import com.enigma.jdbc.request.RequeteQuestionReponse;
+import com.enigma.jdbc.request.RequeteQuete;
+import com.enigma.jdbc.request.RequeteVideo;
 
 public class Testconnection {
 

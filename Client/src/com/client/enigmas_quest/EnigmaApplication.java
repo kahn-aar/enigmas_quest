@@ -114,9 +114,9 @@ public class EnigmaApplication extends Application {
 		return enigma;
 	}
 
-	public void answerTheQuestion(String answer, int enigmaId) {
+	public void answerTheQuestion(String answer, int enigmaId, boolean succes) {
 		RequestRESTAsync async = new RequestRESTAsync(EnigmasConstants.REST_POST_ENIGMA_RESPONSE);
-		async.execute(String.valueOf(enigmaId), player.getName(), answer);
+		async.execute(String.valueOf(enigmaId), player.getName(), answer, String.valueOf(succes));
 		
 	}
 
